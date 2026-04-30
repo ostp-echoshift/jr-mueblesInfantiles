@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "imagen": "assets/img/banners/banner01.jpg",
+    "titulo": "Nueva Colección Infantil",
+    "subtitulo": "Diseños exclusivos para los más pequeños",
+    "cta_texto": "Ver colección",
+    "cta_enlace": "colecciones.html?seg=infantil",
+    "categoria": "infantil",
+    "activo": true,
+    "orden": 1
+  },
+  {
+    "id": 2,
+    "imagen": "assets/img/banners/banner02.jpg",
+    "titulo": "Renueva tu Jardín",
+    "subtitulo": "Mobiliario resistente para exteriores",
+    "cta_texto": "Explorar",
+    "cta_enlace": "colecciones.html?seg=jardin",
+    "categoria": "jardin",
+    "activo": true,
+    "orden": 2
+  },
+  {
+    "id": 3,
+    "imagen": "assets/img/banners/banner03.jpg",
+    "titulo": "Cocina Funcional",
+    "subtitulo": "Organización y estilo en un solo lugar",
+    "cta_texto": "Ver accesorios",
+    "cta_enlace": "colecciones.html?seg=cocina",
+    "categoria": "cocina",
+    "activo": true,
+    "orden": 3
+  },
+  {
+    "id": 4,
+    "imagen": "assets/img/banners/banner04.jpg",
+    "titulo": "Hogar con Estilo",
+    "subtitulo": "Piezas únicas que transforman tu espacio",
+    "cta_texto": "Descubrir",
+    "cta_enlace": "colecciones.html?seg=hogar",
+    "categoria": "hogar",
+    "activo": true,
+    "orden": 4
+  }
+]

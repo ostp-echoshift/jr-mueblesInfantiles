@@ -1,0 +1,16 @@
+[
+  {"id":"gerente", "nombre":"A. Federico Lopez", 
+  "rol":"Director General", 
+  "especialidad":"Ventas al Detalle", 
+  "foto":"assets/img/equipo/fede.jpg"
+},
+  {"id":"vendedor1", "nombre":"Haziel Lopez", 
+  "rol":"Asesora de ventas", 
+  "especialidad":"Muebles infantiles", 
+  "foto":"assets/img/equipo/haziel.jpg"
+},
+  {"id":"vendedor2", "nombre":"Oralia Oriba", 
+    "rol":"Gerente de Ventas", 
+  "especialidad":"Jardín y terraza", 
+  "foto":"assets/img/equipo/oralia.jpg"}
+]

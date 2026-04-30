@@ -1,0 +1,33 @@
+{
+    "nombre":  "Infantiles y Muebles JR",
+    "tagline":  "Muebles infantiles de calidad, diseño y calidez",
+    "ciudad":  "Zapopan, Jalisco",
+    "direccion":  "Av. Valle de Zapopan 1372-2, 45200",
+    "whatsapp":  "5213334866318",
+    "whatsapp_display":  "33 3486 6318",
+    "email_ventas":  "oribaco85@gmail.com",
+    "google_maps":  "https://maps.app.goo.gl/Tzt3885uZ1BK3A227",
+    "facebook":  "https://www.facebook.com/profile.php?id=100090396917834",
+    "instagram":  "https://www.instagram.com/infantilmueblesjr",
+    "horario":  "Lunes a Sábado 10:00 - 19:00",
+    "dominio_prod":  "infantilmueblesjr.com",
+    "moneda":  "MXN",
+    "costo_envio":  150,
+    "envio_gratis_desde":  2000,
+    "colores_primario":  "#8B5A2B",
+    "colores_secundario":  "#C47A3A",
+    "fuente_titulos":  "Cormorant Garamond",
+    "fuente_cuerpo":  "DM Sans",
+    "links":  {
+                  "catalogo":  "catalogo-landingpage.html",
+                  "tienda":  "salecar.html",
+                  "contacto":  "paypage.html",
+                  "personalizar":  "funnel.html",
+                  "colecciones":  "colecciones.html"
+              },
+    "ostp_version":  "3.1.0",
+    "build_date":  "2026-04-28",
+    "pipeline":  "Leviatan / Quantum Sys",
+    "operador":  "OSTP @echoShift",
+    "nivel":  "Operator Sync Tech Pro"
+}

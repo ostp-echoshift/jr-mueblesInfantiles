@@ -1,0 +1,398 @@
+[
+  {
+    "id": 1,
+    "nombre": "Cuna convertible",
+    "descripcion": "Cuna de madera sólida que se transforma en camita infantil. Incluye barandilla de seguridad.",
+    "precio": 2890,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/cuneros/cuna.jpg",
+    "visible": true
+  },
+  {
+    "id": 2,
+    "nombre": "Silla infantil de estudio",
+    "descripcion": "Silla ergonómica regulable en altura, ideal para tareas escolares.",
+    "precio": 890,
+    "categoria": "escolar",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/silla-infantil01.jpg",
+    "visible": true
+  },
+  {
+    "id": 3,
+    "nombre": "Silla infantil de madera",
+    "descripcion": "Silla clásica de pino con respaldo alto, perfecta para comedor infantil.",
+    "precio": 750,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/silla-infantil02.jpg",
+    "visible": true
+  },
+  {
+    "id": 4,
+    "nombre": "Andadera plegable con bandeja",
+    "descripcion": "Andadera de actividades con bandeja desmontable y ruedas silenciosas.",
+    "precio": 1200,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/andaderas/andadera01.jpg",
+    "visible": true
+  },
+  {
+    "id": 5,
+    "nombre": "Andadera musical",
+    "descripcion": "Andadera con luces y sonidos, respaldo acolchado.",
+    "precio": 1350,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/andaderas/andadera02.jpg",
+    "visible": true
+  },
+  {
+    "id": 6,
+    "nombre": "Andadera clásica",
+    "descripcion": "Diseño tradicional en madera, ideal para primeros pasos.",
+    "precio": 1100,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/andaderas/andadera03.jpg",
+    "visible": true
+  },
+  {
+    "id": 7,
+    "nombre": "Andadera de lujo",
+    "descripcion": "Modelo premium con bandeja giratoria y guarda objetos.",
+    "precio": 1650,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/andaderas/andadera04.jpg",
+    "visible": true
+  },
+  {
+    "id": 8,
+    "nombre": "Andadera plegable portátil",
+    "descripcion": "Ligera y fácil de transportar, para viajes.",
+    "precio": 980,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/andaderas/andadera05.jpg",
+    "visible": true
+  },
+  {
+    "id": 9,
+    "nombre": "Andadera multifuncional",
+    "descripcion": "Incluye bandeja de actividades y respaldo extraíble.",
+    "precio": 1420,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/infantiles09.jpg",
+    "visible": true
+  },
+  {
+    "id": 10,
+    "nombre": "Carreola sencilla",
+    "descripcion": "Carreola ligera con capota plegable, ideal para paseos diarios.",
+    "precio": 2100,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/carreolas/carreola-evenflo01.jpg",
+    "visible": true
+  },
+  {
+    "id": 11,
+    "nombre": "Carreola Evenflo silla alta",
+    "descripcion": "Carreola que se convierte en silla alta para alimentación.",
+    "precio": 2450,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/carreolas/carreola-evenflo02.jpg",
+    "visible": true
+  },
+  {
+    "id": 12,
+    "nombre": "Carreola doble",
+    "descripcion": "Carreola side-by-side para dos niños, con frenos independientes.",
+    "precio": 3800,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/carreolas/carreola-doble.jpg",
+    "visible": true
+  },
+  {
+    "id": 13,
+    "nombre": "Juguetero organizador",
+    "descripcion": "Estante con 3 cajones y repisas para guardar juguetes.",
+    "precio": 1340,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/juguetero.jpg",
+    "visible": true
+  },
+  {
+    "id": 14,
+    "nombre": "Sillón infantil tapizado",
+    "descripcion": "Sillón acolchado con diseño de animales, resistente y fácil de limpiar.",
+    "precio": 890,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/sillon-infantil01.jpg",
+    "visible": true
+  },
+  {
+    "id": 15,
+    "nombre": "Comedor infantil",
+    "descripcion": "Mesa y 4 sillas de pino, acabado en barniz no tóxico.",
+    "precio": 3450,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/HOGAR/COMEDORES/comedor.jpg",
+    "visible": true
+  },
+  {
+    "id": 16,
+    "nombre": "Peinador clásico",
+    "descripcion": "Tocador con espejo ovalado y tres cajones, estilo vintage.",
+    "precio": 1850,
+    "categoria": "dormitorio",
+    "imagen": "assets/img/productos/HOGAR/RECAMARAS/peinador01.jpg",
+    "visible": true
+  },
+  {
+    "id": 17,
+    "nombre": "Ventilador moderno de techo",
+    "descripcion": "Ventilador con luz LED y control remoto, aspas silenciosas.",
+    "precio": 1590,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/VENTILADORES/vent01.jpg",
+    "visible": true
+  },
+  {
+    "id": 18,
+    "nombre": "Ventilador industrial",
+    "descripcion": "Modelo de alta potencia para salas o talleres.",
+    "precio": 2100,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/VENTILADORES/vent02.jpg",
+    "visible": true
+  },
+  {
+    "id": 19,
+    "nombre": "Ventilador de pedestal",
+    "descripcion": "Ventilador portátil con 3 velocidades y temporizador.",
+    "precio": 740,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/VENTILADORES/vent03.jpg",
+    "visible": true
+  },
+  {
+    "id": 20,
+    "nombre": "Ventilador de techo decorativo",
+    "descripcion": "Diseño rústico con aspas de madera.",
+    "precio": 1850,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/VENTILADORES/vent04.jpg",
+    "visible": true
+  },
+  {
+    "id": 21,
+    "nombre": "Ventilador mini de escritorio",
+    "descripcion": "Pequeño y silencioso, ideal para oficinas infantiles.",
+    "precio": 390,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/VENTILADORES/vent05.jpg",
+    "visible": true
+  },
+  {
+    "id": 22,
+    "nombre": "Ventilador de techo élite",
+    "descripcion": "Modelo de alta gama con acabado en níquel y luz regulable.",
+    "precio": 2290,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/VENTILADORES/ven07.jpg",
+    "visible": true
+  },
+  {
+    "id": 23,
+    "nombre": "Mesa de jardín plegable",
+    "descripcion": "Mesa de exterior en aluminio, fácil de guardar.",
+    "precio": 980,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/mesa-jardin.jpg",
+    "visible": true
+  },
+  {
+    "id": 24,
+    "nombre": "Sillas de jardín apilables",
+    "descripcion": "Set de 4 sillas de resina, resistentes a la intemperie.",
+    "precio": 1100,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/sillas-jardin.jpg",
+    "visible": true
+  },
+  {
+    "id": 25,
+    "nombre": "Sala de jardín (mimbre)",
+    "descripcion": "Juego de sillón + 2 butacas con cojines desenfundables.",
+    "precio": 4200,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/HOGAR/SALAS/sillon.jpg",
+    "visible": true
+  },
+  {
+    "id": 26,
+    "nombre": "Castillo inflable saltarín",
+    "descripcion": "Inflable para fiendas infantiles, incluye soplador.",
+    "precio": 5500,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/inflables/inflables01.jpg",
+    "visible": true
+  },
+  {
+    "id": 27,
+    "nombre": "Inflable tobogán",
+    "descripcion": "Estructura con resbaladilla y piscina de pelotas.",
+    "precio": 6200,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/inflables/inflables02.jpg",
+    "visible": true
+  },
+  {
+    "id": 28,
+    "nombre": "Inflable combo",
+    "descripcion": "Castillo con arco de básquet y pared de escalada.",
+    "precio": 7150,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/inflables/inflables03.jpg",
+    "visible": true
+  },
+  {
+    "id": 29,
+    "nombre": "Inflable piscina de bolas",
+    "descripcion": "Solo piscina de bolas con bordes inflables.",
+    "precio": 2450,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/inflables/inflables04.jpg",
+    "visible": true
+  },
+  {
+    "id": 30,
+    "nombre": "Inflable deportivo",
+    "descripcion": "Mini cancha de fútbol o básquet, multifuncional.",
+    "precio": 4900,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/inflables/inflables05.jpg",
+    "visible": true
+  },
+  {
+    "id": 31,
+    "nombre": "Sillón tapizado familiar",
+    "descripcion": "Sillón de tres plazas, estructura de madera y tela resistente.",
+    "precio": 3200,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/SALAS/sillon.jpg",
+    "visible": true
+  },
+  {
+    "id": 32,
+    "nombre": "Credenza moderna",
+    "descripcion": "Mueble auxiliar con 2 puertas y 2 cajones, estilo contemporáneo.",
+    "precio": 2100,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/COMEDORES/credenza.jpg",
+    "visible": true
+  },
+  {
+    "id": 33,
+    "nombre": "Estante flotante",
+    "descripcion": "Repisa de madera para libros o adornos, incluye soporte.",
+    "precio": 420,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/COCINA/ESTANTES/estante.jpg",
+    "visible": true
+  },
+  {
+    "id": 34,
+    "nombre": "Frutero de madera",
+    "descripcion": "Frutero artesanal con acabado en laca, capacidad para 3 niveles.",
+    "precio": 290,
+    "categoria": "cocina",
+    "imagen": "assets/img/productos/COCINA/FRUTEROS/frutero.jpg",
+    "visible": true
+  },
+  {
+    "id": 35,
+    "nombre": "Porta garrafón",
+    "descripcion": "Soporte de madera para garrafón de 20 litros, con ruedas.",
+    "precio": 580,
+    "categoria": "cocina",
+    "imagen": "assets/img/productos/COCINA/PORTAGALLON/porta-garrafon.jpg",
+    "visible": true
+  },
+  {
+    "id": 36,
+    "nombre": "Carreola estándar",
+    "descripcion": "Modelo económico, ligero y plegable con una mano.",
+    "precio": 1890,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/carreolas/carreola.jpg",
+    "visible": true
+  },
+  {
+    "id": 37,
+    "nombre": "Set de sala moderno",
+    "descripcion": "Set de sala compuesto por sofá, loveseat y centro de entretenimiento.",
+    "precio": 5800,
+    "categoria": "hogar",
+    "imagen": "assets/img/productos/HOGAR/SALAS/sala01.jpg",
+    "visible": true
+  },
+  {
+    "id": 38,
+    "nombre": "Inflable junior",
+    "descripcion": "Pequeño inflable para interiores, ideal para niños pequeños.",
+    "precio": 1850,
+    "categoria": "jardin",
+    "imagen": "assets/img/productos/JARDIN/inflable.jpg",
+    "visible": true
+  },
+  {
+    "id": 39,
+    "nombre": "Módulo infantil 01",
+    "descripcion": "Juego de dormitorio infantil: cama, buró y librero.",
+    "precio": 4600,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/infantiles01.jpg",
+    "visible": true
+  },
+  {
+    "id": 40,
+    "nombre": "Módulo infantil 02",
+    "descripcion": "Cama alta con escritorio integrado y escalera.",
+    "precio": 5300,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/infantiles02.jpg",
+    "visible": true
+  },
+  {
+    "id": 41,
+    "nombre": "Módulo infantil 03",
+    "descripcion": "Litera convertible en dos camas individuales.",
+    "precio": 4950,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/infantiles03.jpg",
+    "visible": true
+  },
+  {
+    "id": 42,
+    "nombre": "Módulo infantil 04",
+    "descripcion": "Cuna cuna con cambiador y almacenaje inferior.",
+    "precio": 3300,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/infantiles04.jpg",
+    "visible": true
+  },
+  {
+    "id": 43,
+    "nombre": "Módulo infantil 05",
+    "descripcion": "Armario infantil con barras regulables y cajones.",
+    "precio": 3750,
+    "categoria": "infantil",
+    "imagen": "assets/img/productos/INFANTILES/jugueteria/infantiles05.jpg",
+    "visible": true
+  },
+  {
+    "id": 44,
+    "nombre": "Módulo infantil 06",
+    "descripcion": "Escritorio infantil con silla regulable.",
+    "precio": 1980,
+    "categoria": "escolar",
+    "imagen": "assets/img/productos/INFANTILES/carreolas/infantiles06.jpg",
+    "visible": true
+  }
+]
