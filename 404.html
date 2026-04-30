@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página no encontrada | Infantil Muebles JR</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">|<title>Página no encontrada | Infantil Muebles JR</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <meta name="description" content="Lo sentimos, la página que buscas no existe. Regresa a nuestro sitio y descubre muebles infantiles de calidad.">
+  
+  <!-- Estilos globales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  
+  <style>
+    /* Estilos específicos para 404 */
+    body {
+      background: #FCF9F4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .error-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+    }
+    .error-card {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      background: white;
+      border-radius: 32px;
+      padding: 48px 32px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      border: 1px solid #F0E5D8;
+    }
+    .error-icon {
+      font-size: 5rem;
+      margin-bottom: 24px;
+      display: inline-block;
+      animation: wobble 1.5s ease infinite;
+    }
+    @keyframes wobble {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-8px) rotate(-5deg); }
+      75% { transform: translateY(4px) rotate(5deg); }
+    }
+    .error-code {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      font-weight: 600;
+      color: #C47A3A;
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -4px;
+    }
+    .error-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #3D2B1F;
+      margin-bottom: 16px;
+    }
+    .error-message {
+      font-size: 1rem;
+      color: #7A5C44;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    .error-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .btn-primary, .btn-secondary {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+    .btn-primary {
+      background: #C47A3A;
+      color: white;
+      border: 1px solid #C47A3A;
+    }
+    .btn-primary:hover {
+      background: #A55E2A;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #8B5A2B;
+      border: 1px solid #D4B48C;
+    }
+    .btn-secondary:hover {
+      background: #F5EDE2;
+      transform: translateY(-2px);
+    }
+    .suggestions {
+      border-top: 1px solid #EFE5D8;
+      padding-top: 24px;
+      margin-top: 8px;
+    }
+    .suggestions p {
+      font-size: 0.85rem;
+      color: #9B7B5C;
+      margin-bottom: 12px;
+    }
+    .suggestions-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .suggestions-links a {
+      color: #C47A3A;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-bottom: 1px dashed #D4B48C;
+    }
+    .suggestions-links a:hover {
+      color: #8B5A2B;
+    }
+    /* Header y footer igual que en otras páginas */
+    .site-header, .site-footer {
+      background: #FFFCF5;
+      border-bottom: 1px solid #E2D5C0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .site-footer {
+      border-top: 1px solid #E2D5C0;
+      border-bottom: none;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 0;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #8B5A2B;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links li a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-decoration: none;
+      color: #9B7B5C;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links li a:hover {
+      color: #C47A3A;
+    }
+    .footer-text, .footer-link {
+      font-size: 12px;
+      color: #9B7B5C;
+      text-decoration: none;
+    }
+    .footer-link:hover {
+      color: #C47A3A;
+    }
+    @media (max-width: 700px) {
+      .site-header { flex-direction: column; text-align: center; }
+      .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+      .error-code { font-size: 5rem; }
+      .error-card { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
+  <a href="index.html" class="logo">Infantil Muebles JR</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="colecciones.html">Colecciones</a></li>
+    <li><a href="catalogo-landingpage.html">Catálogo</a></li>
+    <li><a href="funnel.html">Personalizar</a></li>
+    <li><a href="paypage.html">Contacto</a></li>
+    <li><a href="salecar.html">Tienda</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+  </ul>
+</header>
+
+<main class="error-container">
+  <div class="error-card">
+    <div class="error-icon">🪑</div>
+    <div class="error-code">404</div>
+    <h1 class="error-title">¡Ups! Mueble extraviado</h1>
+    <p class="error-message">
+      La página que buscas no se encuentra en nuestro catálogo.<br>
+      Tal vez fue movida, renombrada o nunca existió.
+    </p>
+    <div class="error-buttons">
+      <a href="index.html" class="btn-primary">🏠 Volver al inicio</a>
+      <a href="catalogo-landingpage.html" class="btn-secondary">📚 Ver catálogo</a>
+    </div>
+    <div class="suggestions">
+      <p>🔍 También puedes explorar:</p>
+      <div class="suggestions-links">
+        <a href="colecciones.html">Colecciones</a>
+        <a href="salecar.html">Tienda online</a>
+        <a href="funnel.html">Personalizar mueble</a>
+        <a href="nosotros.html">Conócenos</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span class="footer-text">Av. Valle de Zapopan 1372-2, Zapopan, Jalisco</span>
+  <a href="https://wa.me/523334866318" target="_blank" class="footer-link">33 3486 6318</a>
+  <span class="footer-text">✨ Muebles con amor ✨</span>
+</footer>
+
+<script>
+(function() {
+    var btns = document.querySelectorAll('button');
+    for(var i=0; i<btns.length; i++) {
+        var btn = btns[i];
+        if(!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+            btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+        }
+    }
+})();
+</script>
+</body>
+</html>

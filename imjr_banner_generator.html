@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Infantil Muebles JR · Generador de banners interactivo</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <meta name="description" content="Crea banners para redes sociales con los estilos de Infantil Muebles JR. Formatos: Historia, Cuadrado, Retrato y Facebook.">
+  
+  <!-- Recursos globales del sitio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  
+  <style>
+    /* Estilos específicos del generador (complementan tokens.css) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #F9F3E7;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.6s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    body.state-fan {
+      background: linear-gradient(145deg, #EADBC6 0%, #CFC1AB 100%);
+    }
+
+    /* HEADER y FOOTER (se toman de los estilos globales, pero redefinimos para homogeneidad) */
+    .site-header, .site-footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 110;
+      background: rgba(255, 248, 235, 0.96);
+      backdrop-filter: blur(12px);
+      transition: transform 0.4s ease, opacity 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 32px;
+      border-bottom: 1px solid #E2D5C0;
+    }
+    .site-footer {
+      bottom: 0;
+      justify-content: center;
+      gap: 24px;
+      border-top: 1px solid #E2D5C0;
+      border-bottom: none;
+    }
+    .site-header.hidden, .site-footer.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .site-footer.hidden {
+      transform: translateY(100%);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: #8B5A2B;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: #9B7B5C;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #C47A3A;
+    }
+    .footer-text, .footer-link {
+      font-size: 10px;
+      color: #9B7B5C;
+      letter-spacing: 0.6px;
+      text-decoration: none;
+    }
+    .footer-link:hover {
+      color: #C47A3A;
+    }
+
+    /* MAIN STAGE */
+    .stage {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      padding: 100px 20px 140px 20px;
+    }
+
+    /* LOGO ANIMADO (CLICK PARA ABRIR ABANICO) */
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      z-index: 30;
+      transition: transform 0.8s cubic-bezier(0.34, 1, 0.64, 1);
+      transform: translateY(0) scale(1);
+      margin-bottom: 30px;
+    }
+    .logo-wrap.to-horizon {
+      transform: translateY(32vh) scale(0.65);
+    }
+    .logo-hint {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #B28B5E;
+      margin-top: 12px;
+      background: rgba(255, 245, 225, 0.6);
+      padding: 4px 12px;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+    }
+    .logo-wrap.to-horizon .logo-hint {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* SVG LOGO (versión IMJR) */
+    @keyframes ringPulse { 0%,100% { r: 52; opacity: 0.25; } 50% { r: 60; opacity: 0.08; } }
+    @keyframes ringGlow { 0%,100% { stroke: #C47A3A; stroke-width: 1.5; opacity: 0.9; } 50% { stroke: #F2C94C; stroke-width: 2; opacity: 1; } }
+    @keyframes ringRotate { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -330; } }
+    @keyframes leafL { 0%,20%,100% { fill: #9E7B4C; } 60% { fill: #DBA551; } }
+    @keyframes leafC { 0%,40%,100% { fill: #9E7B4C; } 80% { fill: #DBA551; } }
+    @keyframes leafR { 0%,60%,100% { fill: #9E7B4C; } 20% { fill: #DBA551; } }
+    @keyframes stemGlow { 0%,100% { stroke: #C47A3A; opacity: 0.6; } 50% { stroke: #F2C94C; opacity: 1; } }
+    .ring-outer { animation: ringPulse 3s ease-in-out infinite; }
+    .ring-main { animation: ringGlow 2.5s ease-in-out infinite; }
+    .ring-dash { stroke-dasharray: 12 7; animation: ringRotate 8s linear infinite; transform-origin: 130px 104px; }
+    .leaf-l { animation: leafL 3s ease-in-out infinite; }
+    .leaf-c { animation: leafC 3s ease-in-out infinite; }
+    .leaf-r { animation: leafR 3s ease-in-out infinite; }
+    .stem-anim { animation: stemGlow 2.5s ease-in-out infinite; }
+
+    .logo-glow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 260px;
+      height: 260px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(196,122,58,0.2), transparent 70%);
+      pointer-events: none;
+      z-index: 12;
+      opacity: 0;
+      transition: opacity 0.5s;
+      border-radius: 50%;
+    }
+    .logo-glow.active { opacity: 1; }
+
+    .horizon-line {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: calc(32vh - 2px);
+      height: 2px;
+      background: linear-gradient(to right, transparent, #DBA551 20%, #F5D98F 50%, #DBA551 80%, transparent);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 18;
+      transition: opacity 0.5s ease 0.5s;
+    }
+    .horizon-line.vis { opacity: 1; }
+
+    /* PREVIEW DEL BANNER */
+    .preview-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px auto 30px;
+      transition: all 0.2s;
+      z-index: 25;
+      position: relative;
+    }
+    .banner-preview {
+      background: #1E1B16;
+      border-radius: 24px;
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.4);
+      transition: all 0.2s ease;
+      overflow: hidden;
+      border: 1px solid rgba(200,170,110,0.4);
+    }
+
+    /* ABANICO (TARJETAS DE FORMATOS) */
+    .fan-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      height: 100%;
+      pointer-events: none;
+      z-index: 60;
+    }
+    .fan-card {
+      position: absolute;
+      width: 170px;
+      height: 360px;
+      border-radius: 24px 24px 16px 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transform-origin: bottom center;
+      pointer-events: none;
+      opacity: 0;
+      bottom: 8vh;
+      transition: transform 0.3s cubic-bezier(0.2, 1.2, 0.4, 1), box-shadow 0.2s, opacity 0.3s;
+      background: rgba(30, 27, 22, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(219, 165, 81, 0.5);
+      box-shadow: 0 20px 35px -12px black;
+    }
+    .fan-card.visible {
+      pointer-events: auto;
+    }
+    /* posiciones abanico */
+    .fan-card[data-fmt="story"]    { transform: rotate(-16deg) translateX(-200px); --base-t: rotate(-16deg) translateX(-200px); }
+    .fan-card[data-fmt="square"]   { transform: rotate(-5deg)  translateX(-70px);  --base-t: rotate(-5deg)  translateX(-70px); }
+    .fan-card[data-fmt="portrait"] { transform: rotate(5deg)   translateX(70px);   --base-t: rotate(5deg)   translateX(70px); }
+    .fan-card[data-fmt="fb"]       { transform: rotate(16deg)  translateX(200px);  --base-t: rotate(16deg)  translateX(200px); }
+
+    .fan-card:hover {
+      transform: var(--base-t) translateY(-30px) scale(1.03);
+      box-shadow: 0 32px 55px -10px black;
+      border-color: #F2C94C;
+    }
+    .fan-card-bg {
+      background-size: cover;
+      background-position: center;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 16px;
+    }
+    .fan-card[data-fmt="story"] .fan-card-bg { background: linear-gradient(145deg, #5F4C38, #2D241B); }
+    .fan-card[data-fmt="square"] .fan-card-bg { background: linear-gradient(145deg, #7A5C44, #3D2B1F); }
+    .fan-card[data-fmt="portrait"] .fan-card-bg { background: linear-gradient(145deg, #8B694A, #4F3724); }
+    .fan-card[data-fmt="fb"] .fan-card-bg { background: linear-gradient(145deg, #A07954, #5D3F2A); }
+    .fan-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      opacity: 0.8;
+    }
+    .fan-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #F5E7D9;
+      line-height: 1.2;
+    }
+    .fan-sub {
+      font-size: 0.7rem;
+      color: #EADBC6;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+    .badge-fmt {
+      margin-top: 12px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.5);
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 30px;
+      color: #F2C94C;
+    }
+
+    /* VARIANTES DE COPY */
+    .variant-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 24px auto 20px;
+      z-index: 25;
+      position: relative;
+    }
+    .variant-btn {
+      background: #F0E4D4;
+      border: 1px solid #D4B48C;
+      padding: 8px 22px;
+      border-radius: 60px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #5A3E2A;
+      cursor: pointer;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .variant-btn.sel {
+      background: #C47A3A;
+      border-color: #F2C94C;
+      color: white;
+      box-shadow: 0 2px 8px rgba(196,122,58,0.4);
+    }
+    .variant-btn:hover {
+      background: #DBA551;
+      color: #2C1E12;
+    }
+
+    .format-meta {
+      text-align: center;
+      font-size: 12px;
+      color: #866A4A;
+      margin-top: 12px;
+      letter-spacing: 0.8px;
+      font-weight: 400;
+    }
+
+    @media (max-width: 700px) {
+      .fan-card { width: 130px; height: 280px; }
+      .fan-card[data-fmt="story"] { transform: rotate(-16deg) translateX(-140px); --base-t: rotate(-16deg) translateX(-140px); }
+      .fan-card[data-fmt="square"] { transform: rotate(-5deg) translateX(-48px); --base-t: rotate(-5deg) translateX(-48px); }
+      .fan-card[data-fmt="portrait"] { transform: rotate(5deg) translateX(48px); --base-t: rotate(5deg) translateX(48px); }
+      .fan-card[data-fmt="fb"] { transform: rotate(16deg) translateX(140px); --base-t: rotate(16deg) translateX(140px); }
+      .fan-title { font-size: 1.2rem; }
+      .variant-btn { padding: 5px 14px; font-size: 10px; }
+      .nav-links { gap: 14px; }
+      .site-header, .site-footer { padding: 10px 18px; }
+    }
+  </style>
+
+    
+    
+</head>
+<body>
+
+  <!-- HEADER (con enlaces reales del proyecto) -->
+  <header class="site-header" id="siteHeader">
+  <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
+  <a href="index.html" class="logo">Infantil Muebles JR</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="colecciones.html">Colecciones</a></li>
+      <li><a href="catalogo-landingpage.html">Catálogo</a></li>
+      <li><a href="funnel.html">Personalizar</a></li>
+      <li><a href="paypage.html">Contacto</a></li>
+      <li><a href="#" style="color:#C47A3A; border-bottom:1px solid #C47A3A;">Generador</a></li>
+    </ul>
+  </header>
+
+  <!-- FOOTER (sin cambios funcionales) -->
+  <footer class="site-footer" id="siteFooter">
+    <span class="footer-text">Valle de Zapopan 1346, Valle de los Molinos, 45200 Zapopan, Jal.</span>
+    <a href="https://wa.me/523334866318" target="_blank" class="footer-link">33 3486 6318</a>
+    <span class="footer-text">✨ Muebles con amor ✨</span>
+  </footer>
+
+<main class="stage" id="stage">
+  <div class="logo-glow" id="logoGlow"></div>
+  <div class="horizon-line" id="horizonLine"></div>
+
+  <!-- LOGO INTERACTIVO (CLICK PARA ABRIR ABANICO) -->
+  <div class="logo-wrap" id="logoWrap">
+    <svg viewBox="0 0 260 290" width="230" height="260" xmlns="http://www.w3.org/2000/svg">
+      <defs><filter id="glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <circle class="ring-outer" cx="130" cy="104" r="52" fill="none" stroke="#DBA551" stroke-width="0.8"/>
+      <circle class="ring-dash"  cx="130" cy="104" r="84" fill="none" stroke="#C47A3A" stroke-width="0.7" opacity="0.4"/>
+      <circle class="ring-main"  cx="130" cy="104" r="72" fill="none" stroke="#A5652A" stroke-width="1.8" filter="url(#glow)"/>
+      <circle cx="130" cy="104" r="70" fill="#F3E5D3" opacity="0.2"/>
+      <line class="stem-anim" x1="130" y1="150" x2="130" y2="100" stroke="#C47A3A" stroke-width="2.2" stroke-linecap="round"/>
+      <ellipse class="leaf-r" cx="156" cy="108" rx="14" ry="26" fill="#9E7B4C" transform="rotate(30 156 108)" filter="url(#glow)"/>
+      <ellipse class="leaf-l" cx="104" cy="116" rx="14" ry="26" fill="#9E7B4C" transform="rotate(-30 104 116)" filter="url(#glow)"/>
+      <ellipse class="leaf-c" cx="130" cy="82"  rx="13" ry="24" fill="#9E7B4C" filter="url(#glow)"/>
+      <text x="130" y="218" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="38" fill="#8B5A2B" letter-spacing="1.5" font-weight="500">Infantil Muebles JR</text>
+      <text x="130" y="244" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" fill="#B28B5E" letter-spacing="4">MUEBLES INFANTILES · DECORACIÓN</text>
+      <text x="130" y="262" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#C47A3A" letter-spacing="1.5" opacity="0.9">Diseño, calidez y magia para tus hijos</text>
+    </svg>
+    <div class="logo-hint">✨ toca para elegir formato ✨</div>
+  </div>
+
+  <!-- ÁREA DE PREVIEW DEL BANNER -->
+  <div class="preview-area" id="previewArea">
+    <div class="banner-preview" id="bannerPreview" style="width: 280px; height: 498px;">
+      <!-- El banner se inyecta dinámicamente aquí -->
+    </div>
+  </div>
+  <div class="format-meta" id="fmtMeta">Formato: Historia (9:16) · 1080x1920</div>
+
+  <!-- BOTONES DE VARIANTES DE COPY -->
+  <div class="variant-bar" id="variantBar">
+    <button class="variant-btn sel" data-var="infantil">🧸 Colección Infantil</button>
+    <button class="variant-btn" data-var="escolar">📚 Espacio Escolar</button>
+    <button class="variant-btn" data-var="dormitorio">🌙 Dormitorio Soñado</button>
+    <button class="variant-btn" data-var="promo">🎁 Promociones</button>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="siteFooter">
+  <span class="footer-text">Valle de Zapopan 1346, Valle de los Molinos, 45200 Zapopan, Jal.</span>
+  <a href="https://wa.me/523334866318" target="_blank" class="footer-link">33 3486 6318</a>
+  <span class="footer-text">✨ Muebles con amor ✨</span>
+</footer>
+
+<!-- FAN CONTAINER (TARJETAS DE FORMATOS) -->
+<div class="fan-container" id="fanContainer">
+  <div class="fan-card" data-fmt="story">
+    <div class="fan-card-bg">
+      <div class="fan-icon">📱</div>
+      <div class="fan-title">Historia<br>9:16</div>
+      <div class="fan-sub">Ideal para Reels · TikTok</div>
+      <span class="badge-fmt">Story</span>
+    </div>
+  </div>
+  <div class="fan-card" data-fmt="square">
+    <div class="fan-card-bg">
+      <div class="fan-icon">⬛</div>
+      <div class="fan-title">Cuadrado<br>1:1</div>
+      <div class="fan-sub">Feed IG · Facebook</div>
+      <span class="badge-fmt">Square</span>
+    </div>
+  </div>
+  <div class="fan-card" data-fmt="portrait">
+    <div class="fan-card-bg">
+      <div class="fan-icon">📸</div>
+      <div class="fan-title">Retrato<br>4:5</div>
+      <div class="fan-sub">Pinterest · IG Portrait</div>
+      <span class="badge-fmt">Portrait</span>
+    </div>
+  </div>
+  <div class="fan-card" data-fmt="fb">
+    <div class="fan-card-bg">
+      <div class="fan-icon">📘</div>
+      <div class="fan-title">Facebook<br>Horizontal</div>
+      <div class="fan-sub">Posts · Cover</div>
+      <span class="badge-fmt">FB</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- DATA DE BANNERS (contenido adaptado a Infantil Muebles JR) ----
+  const bannersData = {
+    story: {
+      size: "1080 × 1920 px",
+      use: "Instagram Stories · TikTok · Reels",
+      w: 270, h: 480,
+      html: (variant) => {
+        const texts = variantTexts[variant];
+        return `<div style="width:100%;height:100%;background:#1F1A14;position:relative;overflow:hidden;border-radius:20px;font-family:'Cormorant Garamond',Georgia,serif;">
+          <svg width="100%" height="100%" viewBox="0 0 270 480" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="bg1" cx="60%" cy="30%" r="60%"><stop offset="0%" stop-color="#6B4B2E" stop-opacity="0.8"/><stop offset="100%" stop-color="#1A130C" stop-opacity="0"/></radialGradient><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1A130C" stop-opacity="0.1"/><stop offset="70%" stop-color="#1A130C" stop-opacity="0.7"/><stop offset="100%" stop-color="#1A130C" stop-opacity="0.98"/></linearGradient></defs><rect width="270" height="480" fill="#2E241D"/><rect width="270" height="480" fill="url(#bg1)"/><g opacity="0.2" stroke="#DBA551" fill="none" stroke-width="0.7"><path d="M-10 320 Q40 280 60 220 Q80 160 55 80"/><ellipse cx="10" cy="175" rx="10" ry="5" transform="rotate(-30 10 175)"/><ellipse cx="96" cy="167" rx="10" ry="5" transform="rotate(15 96 167)"/></g><rect width="270" height="480" fill="url(#fade)"/></svg>
+          <div style="position:absolute;top:24px;left:0;right:0;text-align:center;"><div style="color:#DBA551;font-size:9px;letter-spacing:3px;">INFANTIL MUEBLES JR</div><div style="width:28px;height:1px;background:#DBA551;margin:6px auto;"></div></div>
+          <div style="position:absolute;bottom:32px;left:24px;right:24px;">
+            <div style="color:#F3DECA;font-size:8px;letter-spacing:2px;margin-bottom:8px;">${texts.sub}</div>
+            <div style="color:#FFEFDF;font-size:28px;line-height:1.1;font-weight:300;">${texts.head.replace(/\n/g,'<br>')}</div>
+            <div style="display:flex;gap:12px;margin-top:18px;"><div style="width:24px;height:1px;background:#DBA551;"></div><div style="color:#DBA551;font-size:8px;">whatsapp 33 3486 6318</div></div>
+            <button style="margin-top:16px;background:transparent;border:0.5px solid #DBA551;color:#DBA551;padding:6px 16px;font-size:8px;border-radius:40px;">Cotizar ahora</button>
+          </div>
+        </div>`;
+      }
+    },
+    square: {
+      size: "1080 × 1080 px",
+      use: "Instagram Feed · Facebook",
+      w: 400, h: 400,
+      html: (variant) => {
+        const texts = variantTexts[variant];
+        return `<div style="width:100%;height:100%;background:#2E241D;border-radius:24px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;background-image:radial-gradient(circle at 80% 20%, #6B4B2E22, #1F1A14);font-family:'Cormorant Garamond',serif;">
+          <div><div style="color:#DBA551;letter-spacing:2px;font-size:10px;">INFANTIL MUEBLES JR</div><div style="width:40px;height:1px;background:#DBA551;margin-top:6px;"></div></div>
+          <div><div style="color:#F3DECA;font-size:12px;">${texts.sub}</div><div style="color:#FFEFDF;font-size:42px;line-height:1.2;">${texts.head.replace(/\n/g,'<br>')}</div></div>
+          <div><button style="background:#DBA55122;border:1px solid #DBA551;color:#DBA551;padding:8px 18px;border-radius:40px;">Descubrir colección</button><div style="margin-top:14px;color:#B28B5E;font-size:10px;">📞 33 3486 6318</div></div>
+        </div>`;
+      }
+    },
+    portrait: {
+      size: "1080 × 1350 px",
+      use: "IG Portrait · Pinterest",
+      w: 360, h: 450,
+      html: (variant) => {
+        const texts = variantTexts[variant];
+        return `<div style="width:100%;height:100%;background:#241E17;border-radius:28px;display:flex;flex-direction:column;justify-content:flex-end;padding:32px;background-image:url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" opacity=\"0.1\"><path fill=\"%23DBA551\" d=\"M20,70 L30,50 L40,70 Z M60,40 L70,20 L80,40 Z\"/></svg>');background-repeat:no-repeat;background-position:top right;background-size:80px;">
+          <div style="color:#DBA551;font-size:10px;margin-bottom:6px;">${texts.sub}</div>
+          <div style="color:#FBF0E2;font-size:36px;line-height:1.2;margin-bottom:20px;">${texts.head.replace(/\n/g,'<br>')}</div>
+          <div style="display:flex;gap:20px;"><button style="border:1px solid #DBA551;background:transparent;color:#DBA551;padding:8px 20px;border-radius:30px;">Pedir info</button><span style="color:#C4A25A;">✨ Envíos a todo México</span></div>
+        </div>`;
+      }
+    },
+    fb: {
+      size: "940 × 788 px",
+      use: "Facebook Post · Cover",
+      w: 480, h: 402,
+      html: (variant) => {
+        const texts = variantTexts[variant];
+        return `<div style="width:100%;height:100%;background:#2C241C;display:flex;align-items:center;padding:0 32px;background:linear-gradient(95deg, #1F1912 0%, #3F2D1D 100%);">
+          <div style="flex:1;"><div style="color:#DBA551;letter-spacing:3px;font-size:10px;">INFANTIL MUEBLES JR</div><div style="width:50px;height:1px;background:#DBA551;margin:8px 0 16px;"></div><div style="color:#F3DECA;font-size:12px;">${texts.sub}</div><div style="color:#FFF3E8;font-size:38px;line-height:1.2;">${texts.head.replace(/\n/g,'<br>')}</div><button style="margin-top:20px;border:1px solid #DBA551;background:#DBA55122;color:#DBA551;padding:8px 22px;border-radius:40px;">Ver muebles</button></div>
+          <div style="width:150px;height:150px;background:#B28B5E33;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:4rem;">🪑</div>
+        </div>`;
+      }
+    }
+  };
+
+  const variantTexts = {
+    infantil: { sub: "🧸 Magia & diversión", head: "Muebles que\nacompañan su\ngrandeza" },
+    escolar: { sub: "📚 Concentración y orden", head: "Espacios\npara aprender\ny soñar" },
+    dormitorio: { sub: "🌙 Dulces sueños", head: "Habitaciones\ncon calidez\ny estilo" },
+    promo: { sub: "🎁 20% OFF en colección verano", head: "El regalo\nperfecto para\nellos" }
+  };
+
+  let currentFmt = "story";
+  let currentVariant = "infantil";
+  let fanOpened = false;
+
+  const previewDiv = document.getElementById("bannerPreview");
+  const fmtMetaSpan = document.getElementById("fmtMeta");
+
+  function renderBanner() {
+    const fmtData = bannersData[currentFmt];
+    const htmlContent = fmtData.html(currentVariant);
+    previewDiv.style.width = fmtData.w + "px";
+    previewDiv.style.height = fmtData.h + "px";
+    previewDiv.innerHTML = htmlContent;
+    fmtMetaSpan.innerHTML = `Formato: ${currentFmt.toUpperCase()} · ${fmtData.size} · ${fmtData.use}`;
+  }
+
+  function setFormat(fmt) {
+    currentFmt = fmt;
+    renderBanner();
+  }
+
+  function setVariant(varId, btn) {
+    currentVariant = varId;
+    document.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    renderBanner();
+  }
+
+  // ---- ABANICO: lógica de apertura ----
+  const logoWrap = document.getElementById("logoWrap");
+  const header = document.getElementById("siteHeader");
+  const footer = document.getElementById("siteFooter");
+  const logoGlow = document.getElementById("logoGlow");
+  const horizonLine = document.getElementById("horizonLine");
+  const fanCards = document.querySelectorAll(".fan-card");
+  const bodyEl = document.body;
+
+  function openFan() {
+    if (fanOpened) return;
+    fanOpened = true;
+    header.classList.add("hidden");
+    footer.classList.add("hidden");
+    logoWrap.classList.add("to-horizon");
+    bodyEl.classList.add("state-fan");
+    logoGlow.classList.add("active");
+    setTimeout(() => horizonLine.classList.add("vis"), 500);
+    const delays = [300, 450, 600, 750];
+    fanCards.forEach((card, i) => {
+      setTimeout(() => {
+        card.style.opacity = "1";
+        card.classList.add("visible");
+      }, delays[i]);
+    });
+    setTimeout(() => {
+      header.classList.remove("hidden");
+      footer.classList.remove("hidden");
+    }, 1300);
+  }
+
+  logoWrap.addEventListener("click", openFan);
+
+  fanCards.forEach(card => {
+    card.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const fmt = card.getAttribute("data-fmt");
+      if (fmt) setFormat(fmt);
+    });
+  });
+
+  document.querySelectorAll(".variant-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const varId = btn.getAttribute("data-var");
+      if (varId) setVariant(varId, btn);
+    });
+  });
+
+  renderBanner();
+
+  // Cerrar abanico con ESC (opcional)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && fanOpened) {
+      fanOpened = false;
+      logoWrap.classList.remove("to-horizon");
+      bodyEl.classList.remove("state-fan");
+      logoGlow.classList.remove("active");
+      horizonLine.classList.remove("vis");
+      fanCards.forEach(c => {
+        c.style.opacity = "0";
+        c.classList.remove("visible");
+      });
+      header.classList.remove("hidden");
+      footer.classList.remove("hidden");
+    }
+  });
+</script>
+  
+<script>
+(function() {
+    var btns = document.querySelectorAll('button');
+    for(var i=0; i<btns.length; i++) {
+        var btn = btns[i];
+        if(!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+            btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+        }
+    }
+})();
+</script>
+</body>
+</html>

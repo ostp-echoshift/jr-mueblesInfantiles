@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel de control - Infantil & Muebles JR. Acceso rápido a todas las secciones del sitio.">
+  <title>Panel de Control | Infantil Muebles JR</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon.svg">
+  <!-- Estilos globales de la marca -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/fx.css">
+  <style>
+    /* Ajustes específicos para el panel */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+      margin-top: 40px;
+    }
+    .panel-card {
+      background: var(--vz-bg-alt);
+      border: 1px solid var(--vz-border);
+      border-radius: var(--vz-radius-lg);
+      padding: 24px 20px;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      color: var(--vz-text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--vz-shadow-sm);
+    }
+    .panel-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--vz-accent);
+      box-shadow: var(--vz-shadow-md);
+    }
+    .panel-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    .panel-title {
+      font-family: var(--vz-font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--vz-primary);
+      margin-bottom: 8px;
+    }
+    .panel-desc {
+      font-size: 0.85rem;
+      color: var(--vz-text-muted);
+      line-height: 1.4;
+    }
+    .badge {
+      background: var(--vz-accent-light);
+      color: var(--vz-primary-dark);
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 30px;
+      margin-top: 12px;
+      display: inline-block;
+    }
+    .hero-panel {
+      background: linear-gradient(135deg, var(--vz-bg) 0%, var(--vz-bg-alt) 100%);
+      padding: var(--vz-sp-xl) 0 var(--vz-sp-lg);
+      border-bottom: 1px solid var(--vz-border-light);
+      text-align: center;
+    }
+    .sub {
+      color: var(--vz-text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) {
+      .panel-grid { gap: 16px; }
+      .panel-card { padding: 18px; }
+      .panel-icon { font-size: 2.4rem; }
+      .panel-title { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header (navegación similar al resto del sitio) -->
+<nav class="vz-nav">
+  <div class="vz-container">
+    <div class="vz-nav-inner">
+      <a href="index.html" class="vz-nav-logo">Infantil & Muebles JR</a>
+      <ul class="vz-nav-links" id="nav-menu">
+        <li><a href="catalogo-landingpage.html">Productos</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="colecciones.html">Colecciones</a></li>
+        <li><a href="paypage.html" class="vz-nav-cta">Cotizar</a></li>
+      </ul>
+      <button class="vz-nav-burger" id="nav-burger" aria-label="Menú">&#9776;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero del panel -->
+<section class="hero-panel">
+  <div class="vz-container">
+    <p class="vz-eyebrow">Panel de administración</p>
+    <h1 class="vz-h1">Acceso rápido a todas las secciones</h1>
+    <p class="sub">Selecciona cualquier tarjeta para ir directamente a la página correspondiente.</p>
+  </div>
+</section>
+
+<!-- Grid de botones / tarjetas -->
+<section class="vz-section">
+  <div class="vz-container">
+    <div class="panel-grid">
+      
+      <!-- nosotros.html -->
+      <a href="nosotros.html" class="panel-card">
+        <div class="panel-icon">👥</div>
+        <div class="panel-title">Nosotros</div>
+        <div class="panel-desc">Historia, equipo y valores de la empresa</div>
+        <span class="badge">Quiénes somos</span>
+      </a>
+      
+      <!-- papernews.html (si existe) -->
+      <a href="papernews.html" class="panel-card">
+        <div class="panel-icon">📰</div>
+        <div class="panel-title">Papernews</div>
+        <div class="panel-desc">Noticias, artículos o blog</div>
+        <span class="badge">Novedades</span>
+      </a>
+      
+      <!-- paypage.html -->
+      <a href="paypage.html" class="panel-card">
+        <div class="panel-icon">💳</div>
+        <div class="panel-title">Pagos / Contacto</div>
+        <div class="panel-desc">Formulario de contacto y métodos de pago</div>
+        <span class="badge">Cotizar</span>
+      </a>
+      
+      <!-- salecar.html (tienda) -->
+      <a href="salecar.html" class="panel-card">
+        <div class="panel-icon">🛒</div>
+        <div class="panel-title">Tienda</div>
+        <div class="panel-desc">Catálogo de productos con carrito de compras</div>
+        <span class="badge">E‑commerce</span>
+      </a>
+      
+      <!-- servicios-landingpage.html -->
+      <a href="servicios-landingpage.html" class="panel-card">
+        <div class="panel-icon">🛠️</div>
+        <div class="panel-title">Servicios</div>
+        <div class="panel-desc">Landing page de servicios ofrecidos</div>
+        <span class="badge">Servicios</span>
+      </a>
+      
+      <!-- allproducts.html -->
+      <a href="allproducts.html" class="panel-card">
+        <div class="panel-icon">📦</div>
+        <div class="panel-title">Todos los productos</div>
+        <div class="panel-desc">Listado completo de productos (grid alternativo)</div>
+        <span class="badge">Inventario</span>
+      </a>
+      
+      <!-- catalogo-landingpage.html -->
+      <a href="catalogo-landingpage.html" class="panel-card">
+        <div class="panel-icon">📘</div>
+        <div class="panel-title">Catálogo principal</div>
+        <div class="panel-desc">Landing page de catálogo con filtros</div>
+        <span class="badge">Explorar</span>
+      </a>
+      
+      <!-- colecciones.html -->
+      <a href="colecciones.html" class="panel-card">
+        <div class="panel-icon">🏷️</div>
+        <div class="panel-title">Colecciones</div>
+        <div class="panel-desc">Agrupaciones temáticas de productos</div>
+        <span class="badge">Temporadas</span>
+      </a>
+      
+      <!-- funnel.html -->
+      <a href="funnel.html" class="panel-card">
+        <div class="panel-icon">🎯</div>
+        <div class="panel-title">Funnel de ventas</div>
+        <div class="panel-desc">Embudo interactivo para personalizar pedidos</div>
+        <span class="badge">Lead</span>
+      </a>
+      
+      <!-- imjr_banner_generator.html -->
+      <a href="imjr_banner_generator.html" class="panel-card">
+        <div class="panel-icon">🎨</div>
+        <div class="panel-title">Generador de banners</div>
+        <div class="panel-desc">Herramienta para crear banners promocionales</div>
+        <span class="badge">Diseño</span>
+      </a>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Footer similar al resto -->
+<footer class="vz-footer">
+  <div class="vz-container">
+    <div class="vz-footer-grid">
+      <div><div class="vz-footer-title">Infantil & Muebles JR</div><p>Muebles y accesorios para toda la familia</p><p>Guadalajara, Jalisco</p></div>
+      <div><div class="vz-footer-title">Ubicación</div><p>Av. Valle de Zapopan 1372-2, Zapopan, Jal.</p></div>
+      <div><div class="vz-footer-title">Contacto</div><p><a href="https://wa.me/523334866318">33 3486 6318</a></p><p><a href="index.html">Panel de control</a></p></div>
+    </div>
+    <div class="vz-footer-copy">&copy; 2026 Infantil & Muebles JR &nbsp;&middot;&nbsp; Desarrollado por <a href="https://ostp-echoshift.com" target="_blank" rel="noopener">OSTP @echoShift</a></div>
+  </div>
+</footer>
+
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/523334866318" class="vz-wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<script>
+  // Funcionalidad del menú responsive (burguer)
+  const burger = document.getElementById('nav-burger');
+  const menu = document.getElementById('nav-menu');
+  if (burger && menu) {
+    burger.addEventListener('click', () => menu.classList.toggle('open'));
+  }
+
+  // Scroll reveal para los elementos (opcional)
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('vz-in');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.panel-card').forEach(card => {
+    card.classList.add('vz-reveal');
+    observer.observe(card);
+  });
+</script>
+<script>
+(function() {
+    var btns = document.querySelectorAll('button');
+    for(var i=0; i<btns.length; i++) {
+        var btn = btns[i];
+        if(!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+            btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+        }
+    }
+})();
+</script>
+<script>
+(function() {
+  var toggle = document.getElementById('menuToggle');
+  var nav = document.getElementById('navLinks');
+  if (toggle && nav) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('open');
+    });
+    // Cerrar menú al hacer clic en un enlace
+    var links = nav.querySelectorAll('a');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function() {
+        nav.classList.remove('open');
+      });
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infantil Muebles JR | Muebles y accesorios</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/fx.css">
+<style>
+    *{box-sizing:border-box;margin:0;padding:0}
+        html,body{height:100%;overflow:hidden}
+        body{
+          font-family:'DM Sans',sans-serif;
+          background:#EDE5D8;
+          color:#2C2C24;
+          transition:background 0.9s ease;
+        }
+        body.state-fan{
+          background:linear-gradient(to top,#1a3022 0%,#2A4E38 22%,#4a7a55 48%,#8ab898 72%,#EDE5D8 100%);
+        }
+
+        /* HEADER */
+        .vz-header{
+          position:fixed;top:0;left:0;right:0;z-index:100;
+          padding:14px 40px;
+          display:flex;align-items:center;justify-content:space-between;
+          background:#FAF6EE;border-bottom:1px solid #D9D0C0;
+          transform:translateY(0);
+          transition:transform .4s ease,opacity .4s ease,background .3s,padding .3s;
+        }
+        .vz-header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none}
+        .vz-header.ribbon{
+          background:rgba(250,246,238,.92);
+          backdrop-filter:blur(8px);
+          border-bottom:1px solid rgba(217,208,192,.45);
+          padding:10px 40px;
+        }
+        .header-logo{
+          font-family:'Cormorant Garamond',serif;
+          font-size:20px;color:#3D6B4F;letter-spacing:2px;
+          font-weight:400;text-decoration:none;
+        }
+        .header-nav{display:flex;gap:28px;list-style:none}
+        .header-nav a{
+          font-size:11px;color:#7A7060;text-decoration:none;
+          letter-spacing:.09em;text-transform:uppercase;transition:color .2s;
+        }
+        .header-nav a:hover{color:#3D6B4F}
+
+        /* FOOTER */
+        .vz-footer{
+          position:fixed;bottom:0;left:0;right:0;z-index:100;
+          padding:11px 40px;
+          background:#FAF6EE;border-top:1px solid #D9D0C0;
+          display:flex;align-items:center;justify-content:center;gap:32px;
+          transform:translateY(0);
+          transition:transform .4s ease,opacity .4s ease;
+        }
+        .vz-footer.hidden{transform:translateY(100%);opacity:0;pointer-events:none}
+        .vz-footer.ribbon{
+          background:rgba(250,246,238,.92);
+          backdrop-filter:blur(8px);padding:7px 40px;
+        }
+        .vz-footer p{font-size:11px;color:#9A8A70;letter-spacing:.05em}
+        .vz-footer a{font-size:11px;color:#C4A25A;text-decoration:none;transition:color .2s}
+        .vz-footer a:hover{color:#3D6B4F}
+
+        /* STAGE */
+        .stage{
+          position:fixed;inset:0;
+          display:flex;align-items:center;justify-content:center;
+          z-index:10;
+        }
+
+        /* LOGO WRAP */
+        .logo-wrap{
+          position:absolute;
+          display:flex;flex-direction:column;align-items:center;
+          cursor:pointer;user-select:none;z-index:20;
+          transform:translateY(0) scale(1);
+          transition:transform 0.9s cubic-bezier(0.34,1,0.64,1);
+        }
+        .logo-wrap.to-horizon{transform:translateY(38vh) scale(0.7)}
+        .logo-hint{
+          font-size:11px;color:#9A8A70;letter-spacing:.16em;
+          text-transform:uppercase;margin-top:14px;
+          opacity:1;transition:opacity .3s;
+        }
+        .logo-wrap.to-horizon .logo-hint{opacity:0}
+
+        /* LOGO SVG ANIMATIONS */
+        @keyframes ringPulse{0%,100%{r:56;opacity:.2}50%{r:64;opacity:.07}}
+        @keyframes ringGlow{0%,100%{stroke:#C4A25A;stroke-width:1.5;opacity:.9}50%{stroke:#E8D5A3;stroke-width:2;opacity:1}}
+        @keyframes ringRotate{from{stroke-dashoffset:0}to{stroke-dashoffset:-330}}
+        @keyframes leafL{0%,20%,100%{fill:#3D6B4F}60%{fill:#7AAB88}}
+        @keyframes leafC{0%,40%,100%{fill:#3D6B4F}80%{fill:#7AAB88}}
+        @keyframes leafR{0%,60%,100%{fill:#3D6B4F}20%{fill:#7AAB88}}
+        @keyframes stemGlow{0%,100%{stroke:#C4A25A;opacity:.7}50%{stroke:#E8D5A3;opacity:1}}
+        @keyframes cardRise{from{opacity:0;transform:var(--base-t) translateY(60px)}to{opacity:1;transform:var(--base-t) translateY(0)}}
+
+        .ring-outer{animation:ringPulse 3s ease-in-out infinite}
+        .ring-main{animation:ringGlow 2.5s ease-in-out infinite}
+        .ring-dash{stroke-dasharray:15 8;animation:ringRotate 8s linear infinite;transform-origin:130px 104px}
+        .leaf-l{animation:leafL 3s ease-in-out infinite}
+        .leaf-c{animation:leafC 3s ease-in-out infinite}
+        .leaf-r{animation:leafR 3s ease-in-out infinite}
+        .stem-anim{animation:stemGlow 2.5s ease-in-out infinite}
+
+        .logo-glow{
+          position:absolute;width:220px;height:220px;border-radius:50%;
+          background:radial-gradient(circle,rgba(138,184,152,.18),transparent 70%);
+          pointer-events:none;z-index:15;opacity:0;
+          transition:opacity .6s ease;
+        }
+        .logo-glow.active{opacity:1}
+
+        .horizon-line{
+          position:absolute;left:0;right:0;
+          bottom:calc(38vh - 2px);
+          height:1px;
+          background:linear-gradient(to right,transparent,rgba(61,107,79,.25) 20%,rgba(196,162,90,.35) 50%,rgba(61,107,79,.25) 80%,transparent);
+          opacity:0;pointer-events:none;z-index:18;
+          transition:opacity .5s ease .6s;
+        }
+        .horizon-line.vis{opacity:1}
+
+        /* FAN CARDS */
+        .fan-container{
+          position:absolute;bottom:0;left:0;right:0;
+          display:flex;align-items:flex-end;justify-content:center;
+          height:100%;pointer-events:none;z-index:15;
+        }
+        .fan-card{
+          position:absolute;
+          width:176px;height:400px;
+          border-radius:14px 14px 8px 8px;
+          overflow:hidden;
+          cursor:pointer;
+          transform-origin:bottom center;
+          pointer-events:none;opacity:0;
+          bottom:10vh;
+          transition:transform .3s cubic-bezier(0.34,1.56,0.64,1),box-shadow .3s ease,opacity .3s;
+          border:1px solid rgba(255,255,255,.16);
+          backdrop-filter:blur(4px);
+        }
+        .fan-card.visible{pointer-events:all}
+        .fan-card[data-seg="infantil"] {--base-t:rotate(-13deg) translateX(-220px); transform:rotate(-13deg) translateX(-220px)}
+        .fan-card[data-seg="jardin"]   {--base-t:rotate(-4deg)  translateX(-74px);  transform:rotate(-4deg)  translateX(-74px)}
+        .fan-card[data-seg="cocina"]   {--base-t:rotate(4deg)   translateX(74px);   transform:rotate(4deg)   translateX(74px)}
+        .fan-card[data-seg="hogar"]    {--base-t:rotate(13deg)  translateX(220px);  transform:rotate(13deg)  translateX(220px)}
+        
+        .fan-card[data-seg="infantil"]:hover {transform:rotate(-13deg) translateX(-220px) translateY(-38px) scale(1.04);box-shadow:0 32px 60px rgba(0,0,0,.38);z-index:25!important}
+        .fan-card[data-seg="jardin"]:hover   {transform:rotate(-4deg)  translateX(-74px)  translateY(-38px) scale(1.04);box-shadow:0 32px 60px rgba(0,0,0,.38);z-index:25!important}
+        .fan-card[data-seg="cocina"]:hover   {transform:rotate(4deg)   translateX(74px)   translateY(-38px) scale(1.04);box-shadow:0 32px 60px rgba(0,0,0,.38);z-index:25!important}
+        .fan-card[data-seg="hogar"]:hover    {transform:rotate(13deg)  translateX(220px)  translateY(-38px) scale(1.04);box-shadow:0 32px 60px rgba(0,0,0,.38);z-index:25!important}
+
+        .fan-card[data-seg="infantil"] {background:rgba(42,78,56,.84)}
+        .fan-card[data-seg="jardin"]   {background:rgba(107,76,42,.84)}
+        .fan-card[data-seg="cocina"]   {background:rgba(26,26,46,.87)}
+        .fan-card[data-seg="hogar"]    {background:rgba(80,50,20,.84)}
+
+        .fan-card::before{
+          content:'';position:absolute;inset:0;z-index:1;
+          background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.65) 100%);
+        }
+        .fan-icon{
+          position:absolute;
+          top:22px;
+          left:0;
+          right:0;
+          text-align:center;
+          z-index:2;
+          opacity:.85;
+          transition:opacity .2s,transform .2s;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+        }
+        .fan-icon img{
+          width:52px;
+          height:auto;
+          filter:drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+          transition:transform 0.25s ease;
+        }
+        .fan-card:hover .fan-icon{opacity:1;transform:scale(1.02);}
+        .fan-card:hover .fan-icon img{transform:scale(1.08);}
+        .fan-card-body{
+          position:absolute;bottom:0;left:0;right:0;
+          padding:20px 16px;z-index:2;
+        }
+        .fan-num{
+          font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+          color:rgba(255,255,255,.5);margin-bottom:6px;
+        }
+        .fan-title{
+          font-family:'Cormorant Garamond',serif;
+          font-size:1.1rem;font-weight:600;
+          color:#fff;line-height:1.2;margin-bottom:5px;
+        }
+        .fan-sub{font-size:.72rem;color:rgba(255,255,255,.6);line-height:1.4;margin-bottom:10px}
+        .fan-cta{
+          display:inline-flex;align-items:center;gap:5px;
+          font-size:.7rem;font-weight:500;letter-spacing:.4px;
+          color:rgba(255,255,255,.85);text-transform:uppercase;
+          border:1px solid rgba(255,255,255,.25);border-radius:4px;
+          padding:5px 10px;transition:background .2s,border-color .2s;
+        }
+        .fan-card:hover .fan-cta{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5)}
+        .fan-cta svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
+        @media(max-width:600px){
+          .fan-card{width:130px;height:300px}
+          .fan-card[data-seg="infantil"]{transform:rotate(-13deg) translateX(-150px)}
+          .fan-card[data-seg="jardin"]  {transform:rotate(-4deg)  translateX(-50px)}
+          .fan-card[data-seg="cocina"]  {transform:rotate(4deg)   translateX(50px)}
+          .fan-card[data-seg="hogar"]   {transform:rotate(13deg)  translateX(150px)}
+          .fan-card[data-seg="infantil"]:hover {transform:rotate(-13deg) translateX(-150px) translateY(-24px) scale(1.04)}
+          .fan-card[data-seg="jardin"]:hover   {transform:rotate(-4deg)  translateX(-50px)  translateY(-24px) scale(1.04)}
+          .fan-card[data-seg="cocina"]:hover   {transform:rotate(4deg)   translateX(50px)   translateY(-24px) scale(1.04)}
+          .fan-card[data-seg="hogar"]:hover    {transform:rotate(13deg)  translateX(150px)  translateY(-24px) scale(1.04)}
+          .fan-icon img{width:42px}
+          .header-nav{gap:14px}
+          .vz-header,.vz-footer{padding:10px 18px}
+        }
+    </style>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <header class="vz-header" id="vz-header">
+  <a href="index.html" class="header-logo">Infantil Muebles JR</a>
+      <ul class="header-nav">
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="catalogo-landingpage.html">Catálogo</a></li>
+        <li><a href="colecciones.html">Colecciones</a></li>
+        <li><a href="paypage.html">Contacto</a></li>
+      </ul>
+    </header>
+
+    <!-- STAGE -->
+    <main class="stage" id="stage">
+
+    <div class="logo-glow" id="logoGlow"></div>
+    <div class="horizon-line" id="horizonLine"></div>
+
+    <!-- LOGO PRINCIPAL -->
+      <div class="logo-wrap" id="logoWrap" onclick="activateFan()" title="Descubre Infantil Muebles JR">
+       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 560" id="JR_MONOGRAM_FUSION" width="260" height="290" style="overflow:visible">
+    <defs>
+        <filter id="dynamic_metal" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.5" result="blur" />
+          <feSpecularLighting surfaceScale="8" specularConstant="1.3" specularExponent="40" lighting-color="#ffffff" in="blur" result="specOut">
+            <fePointLight id="light_source" x="260" y="280" z="300" />
+          </feSpecularLighting>
+          <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOutCombined" />
+          <feComposite in="SourceGraphic" in2="specOutCombined" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
+        </filter>
+        <filter id="shadow_soft"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.8"/></filter>
+        <filter id="glow_subtle"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="led_glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="rim_glow"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="metal_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#D4703A"/><stop offset="25%" stop-color="#F0A060"/><stop offset="50%" stop-color="#8B3218"/><stop offset="75%" stop-color="#C06030"/><stop offset="100%" stop-color="#521508"/>
+        </linearGradient>
+        <linearGradient id="metal_dark" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8B3218"/><stop offset="50%" stop-color="#521508"/><stop offset="100%" stop-color="#2A0A04"/>
+        </linearGradient>
+        <radialGradient id="sphere_chrome" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="25%" stop-color="#F0A060"/><stop offset="55%" stop-color="#D4703A"/><stop offset="80%" stop-color="#8B3218"/><stop offset="100%" stop-color="#521508"/>
+        </radialGradient>
+        <linearGradient id="sweep_vertical" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0"><animate attributeName="offset" values="0;0.85;1" dur="4s" repeatCount="indefinite"/></stop>
+          <stop offset="0%" stop-color="#FFD080" stop-opacity="0.6"><animate attributeName="offset" values="0.05;0.9;1" dur="4s" repeatCount="indefinite"/></stop>
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0"><animate attributeName="offset" values="0.12;1;1" dur="4s" repeatCount="indefinite"/></stop>
+        </linearGradient>
+        <radialGradient id="core_pulse" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF" /><stop offset="40%" stop-color="#FF8000" /><stop offset="100%" stop-color="#521508" />
+        </radialGradient>
+      </defs>
+
+  <!-- ELIMINÉ EL RECTÁNGULO DE FONDO (ya no hay fondo sólido) -->
+
+  <!-- Borde exterior con pulso LED -->
+      <circle cx="260" cy="280" r="270" fill="none" stroke-width="22">
+        <animate attributeName="stroke" values="#333333;#8B3218;#D4703A;#8B3218;#333333" dur="6s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="260" cy="280" r="262" fill="none" stroke="#1A0A04" stroke-width="2" opacity="0.6"/>
+      <circle cx="260" cy="280" r="250" fill="none" stroke-width="30" opacity="0.08" filter="url(#rim_glow)">
+        <animate attributeName="stroke" values="#8B3218;#D4703A;#8B3218" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.04;0.12;0.04" dur="6s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- MONOGRAMA JR -->
+      <g id="MONOGRAM" filter="url(#dynamic_metal)">
+        <rect x="178" y="88" width="88" height="36" rx="18" fill="url(#metal_grad)" filter="url(#shadow_soft)"/>
+        <rect x="178" y="88" width="88" height="36" rx="18" fill="url(#sweep_vertical)" opacity="0.6"/>
+        <path d="M 195,88 L 192,390 C 191,418 187,445 174,465 C 160,488 138,505 112,510 C 85,515 57,504 41,483 C 25,462 26,434 41,414 C 55,394 80,387 103,395 C 123,402 137,420 136,441 C 135,458 124,471 110,474 C 96,477 83,469 78,456 C 73,444 79,431 91,428 C 101,425 113,431 115,442" fill="none" stroke="url(#metal_grad)" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" filter="url(#shadow_soft)"/>
+        <path d="M 195,88 L 192,390 C 191,418 187,445 174,465 C 160,488 138,505 112,510 C 85,515 57,504 41,483 C 25,462 26,434 41,414 C 55,394 80,387 103,395 C 123,402 137,420 136,441 C 135,458 124,471 110,474 C 96,477 83,469 78,456 C 73,444 79,431 91,428 C 101,425 113,431 115,442" fill="none" stroke="url(#sweep_vertical)" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+        <path d="M 248,88 L 248,308" fill="none" stroke="url(#metal_grad)" stroke-width="44" stroke-linecap="round" filter="url(#shadow_soft)"/>
+        <path d="M 248,88 L 248,308" fill="none" stroke="url(#sweep_vertical)" stroke-width="44" stroke-linecap="round" opacity="0.7"/>
+        <path d="M 248,95 C 296,86 364,90 404,112 C 446,136 464,174 460,214 C 456,252 432,280 396,294 C 372,303 342,306 314,304 L 248,302 Z M 270,138 C 300,132 336,136 360,152 C 382,167 390,192 383,216 C 376,238 356,252 332,256 C 312,259 292,256 278,252 L 270,250 Z" fill="url(#metal_grad)" fill-rule="evenodd" filter="url(#shadow_soft)"/>
+        <path d="M 314,304 C 332,304 350,310 364,324 C 382,342 424,398 450,436 C 470,463 482,488 478,506 C 475,518 463,522 451,518 C 437,513 422,496 404,472 C 379,441 338,382 316,352 C 294,323 274,308 260,304 Z" fill="url(#metal_dark)" filter="url(#shadow_soft)"/>
+      </g>
+
+      <!-- ESFERA CENTRAL CON ANILLOS ORBITALES -->
+      <g id="CORE_SYSTEM" cursor="pointer">
+        <g>
+          <animateTransform attributeName="transform" type="rotate" from="-20 221 58" to="340 221 58" dur="10s" repeatCount="indefinite"/>
+          <ellipse cx="221" cy="58" rx="85" ry="25" fill="none" stroke-width="5" filter="url(#glow_subtle)">
+            <animate attributeName="stroke" values="#D4703A;#F0A060;#FFD080;#F0A060;#D4703A" dur="4s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>
+        <g>
+          <animateTransform attributeName="transform" type="rotate" from="20 221 58" to="-340 221 58" dur="15s" repeatCount="indefinite"/>
+          <ellipse cx="221" cy="58" rx="85" ry="25" fill="none" stroke-width="5" filter="url(#glow_subtle)">
+            <animate attributeName="stroke" values="#8B3218;#D4703A;#F0A060;#D4703A;#8B3218" dur="4s" begin="2s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>
+        <circle id="core_sphere" cx="221" cy="58" r="45" fill="url(#sphere_chrome)" filter="url(#shadow_soft)">
+          <animate attributeName="r" values="45;48;45" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+        <ellipse cx="208" cy="44" rx="14" ry="8" fill="white" opacity="0.4" transform="rotate(-25 208 44)"/>
+        <circle cx="221" cy="58" r="49" fill="none" filter="url(#led_glow)">
+          <animate attributeName="stroke" values="#8B3218;#D4703A;#F0A060;#FFD080;#F0A060;#D4703A;#8B3218" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-width" values="1;2;4;6;4;2;1" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.2;0.5;0.8;1;0.8;0.5;0.2" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <ellipse cx="210" cy="42" rx="8" ry="5" fill="#FFD080" opacity="0" transform="rotate(-25 210 42)" filter="url(#led_glow)">
+          <animate attributeName="opacity" values="0;0;0.6;0.9;0.6;0;0" dur="5s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+
+  <script>
+    <![CDATA[
+    const svg = document.getElementById('JR_MONOGRAM_FUSION');
+    const light = document.getElementById('light_source');
+    const core = document.getElementById('CORE_SYSTEM');
+    const sphere = document.getElementById('core_sphere');
+    svg.addEventListener('mousemove', (e) => {
+      const rect = svg.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (520 / rect.width);
+      const y = (e.clientY - rect.top) * (560 / rect.height);
+      light.setAttribute('x', x);
+      light.setAttribute('y', y);
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === '1') sphere.style.fill = 'url(#core_pulse)';
+      else if(e.key === '2') sphere.style.fill = '#FF0000';
+      else if(e.key === '3') sphere.style.fill = '#FFFFFF';
+    });
+    core.addEventListener('click', () => {
+      const shockwave = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      shockwave.setAttribute("cx", "221"); shockwave.setAttribute("cy", "58"); shockwave.setAttribute("r", "45");
+      shockwave.setAttribute("fill", "none"); shockwave.setAttribute("stroke", "#FF4500"); shockwave.setAttribute("stroke-width", "8");
+      svg.appendChild(shockwave);
+      shockwave.animate([{ r: 45, opacity: 1 }, { r: 300, opacity: 0 }], { duration: 600 }).onfinish = () => shockwave.remove();
+    });
+    ]]>
+   </script>
+  </svg>
+   <p class="logo-hint">Toca para explorar</p>
+      </div>
+
+          <!-- FAN CARDS CON LOGO SVG (sin emojis) -->
+         <div class="fan-container" id="fanContainer">
+          <div class="fan-card" data-seg="infantil" data-href="colecciones.html?seg=infantil" style="z-index:16">
+            <div class="fan-icon">🧸</div>
+            <div class="fan-card-body">
+              <div class="fan-num">01</div>
+              <div class="fan-title">Infantil</div>
+              <div class="fan-sub">Cunas, andaderas, jugueteros y más</div>
+              <span class="fan-cta">Ver colección <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+          </div>
+          <div class="fan-card" data-seg="jardin" data-href="colecciones.html?seg=jardin" style="z-index:17">
+            <div class="fan-icon">🌿</div>
+            <div class="fan-card-body">
+              <div class="fan-num">02</div>
+              <div class="fan-title">Jardín</div>
+              <div class="fan-sub">Mesas, sillas, inflables y accesorios</div>
+              <span class="fan-cta">Ver colección <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+          </div>
+          <div class="fan-card" data-seg="cocina" data-href="colecciones.html?seg=cocina" style="z-index:18">
+            <div class="fan-icon">🍽️</div>
+            <div class="fan-card-body">
+              <div class="fan-num">03</div>
+              <div class="fan-title">Cocina</div>
+              <div class="fan-sub">Estantes, fruteros, garrafoneros y más</div>
+              <span class="fan-cta">Ver colección <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+          </div>
+          <div class="fan-card" data-seg="hogar" data-href="colecciones.html?seg=hogar" style="z-index:19">
+            <div class="fan-icon">🏠</div>
+            <div class="fan-card-body">
+              <div class="fan-num">04</div>
+              <div class="fan-title">Hogar</div>
+              <div class="fan-sub">Salas, comedores, credenzas y decoración</div>
+              <span class="fan-cta">Ver colección <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+            </div>
+          </div>
+        </main>
+
+      <!-- FOOTER -->
+      <footer class="vz-footer" id="vz-footer">
+        <p>Valle de Zapopan 1346, Valle de los Molinos, 45200 Zapopan, Jal.</p>
+        <a href="https://wa.me/523334866318" target="_blank" rel="noopener">33 3486 6318</a>
+        <p>Desarrollado por <a href="https://ostp-echoshift.com" target="_blank" rel="noopener">OSTP @echoShift</a></p>
+      </footer>
+
+    <script>
+        'use strict';
+        let fanActive=false;
+        const logoWrap=document.getElementById('logoWrap');
+        const header=document.getElementById('vz-header');
+        const footer=document.getElementById('vz-footer');
+        const logoGlow=document.getElementById('logoGlow');
+        const horizonLine=document.getElementById('horizonLine');
+        const cards=document.querySelectorAll('.fan-card');
+
+        function activateFan(){
+          if(fanActive)return;
+          fanActive=true;
+          header.classList.add('hidden');
+          footer.classList.add('hidden');
+          logoWrap.classList.add('to-horizon');
+          document.body.classList.add('state-fan');
+          logoGlow.classList.add('active');
+          setTimeout(()=>horizonLine.classList.add('vis'),600);
+          const delays=[380,560,740,920];
+          cards.forEach((card,i)=>{
+            setTimeout(()=>{
+              card.style.setProperty('--base-t',getComputedStyle(card).getPropertyValue('--base-t'));
+              card.style.animation='cardRise .52s cubic-bezier(0.34,1.4,0.64,1) forwards';
+              card.classList.add('visible');
+            },delays[i]);
+          });
+          setTimeout(()=>{
+            header.classList.remove('hidden');
+            footer.classList.remove('hidden');
+            header.classList.add('ribbon');
+            footer.classList.add('ribbon');
+          },1280);
+        }
+
+        cards.forEach(card=>{
+          card.addEventListener('click',()=>{
+            const dest=card.getAttribute('data-href');
+            if(!dest)return;
+            card.style.opacity='.65';
+            card.style.transform=card.style.transform+' scale(0.97)';
+            setTimeout(()=>{ window.location.href=dest; },200);
+          });
+        });
+      </script>
+   <script>
+(function() {
+    var btns = document.querySelectorAll('button');
+    for(var i=0; i<btns.length; i++) {
+        var btn = btns[i];
+        if(!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+            btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+        }
+    }
+})();
+</script>
+<script>
+(function() {
+  var toggle = document.getElementById('menuToggle');
+  var nav = document.getElementById('navLinks');
+  if (toggle && nav) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('open');
+    });
+    // Cerrar menú al hacer clic en un enlace
+    var links = nav.querySelectorAll('a');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function() {
+        nav.classList.remove('open');
+      });
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 560" id="JR_MONOGRAM_FUSION">
+  <defs>
+    <!-- FILTRO DE METAL DINÁMICO (reflejo que sigue al ratón) -->
+    <filter id="dynamic_metal" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+        <feSpecularLighting surfaceScale="8" specularConstant="1.3" specularExponent="40" 
+                          lighting-color="#ffffff" in="blur" result="specOut">
+        <fePointLight id="light_source" x="260" y="280" z="300" />
+      </feSpecularLighting>
+      <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOutCombined" />
+      <feComposite in="SourceGraphic" in2="specOutCombined" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
+    </filter>
+
+    <!-- SOMBRAS Y BRILLOS -->
+    <filter id="shadow_soft">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.8"/>
+    </filter>
+    <filter id="glow_subtle">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="led_glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="rim_glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- GRADIENTES METÁLICOS (inspirados en el original pero más ricos) -->
+    <linearGradient id="metal_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4703A"/>
+      <stop offset="25%" stop-color="#F0A060"/>
+      <stop offset="50%" stop-color="#8B3218"/>
+      <stop offset="75%" stop-color="#C06030"/>
+      <stop offset="100%" stop-color="#521508"/>
+    </linearGradient>
+
+    <linearGradient id="metal_dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B3218"/>
+      <stop offset="50%" stop-color="#521508"/>
+      <stop offset="100%" stop-color="#2A0A04"/>
+    </linearGradient>
+
+    <radialGradient id="sphere_chrome" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#F0A060"/>
+      <stop offset="55%" stop-color="#D4703A"/>
+      <stop offset="80%" stop-color="#8B3218"/>
+      <stop offset="100%" stop-color="#521508"/>
+    </radialGradient>
+
+    <!-- BARRIOS DE LUZ LED (sweep) sobre los fustes -->
+    <linearGradient id="sweep_vertical" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0">
+        <animate attributeName="offset" values="0;0.85;1" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="0%" stop-color="#FFD080" stop-opacity="0.6">
+        <animate attributeName="offset" values="0.05;0.9;1" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0">
+        <animate attributeName="offset" values="0.12;1;1" dur="4s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <!-- Pulso de color para la esfera -->
+    <radialGradient id="core_pulse" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF" />
+      <stop offset="40%" stop-color="#FF8000" />
+      <stop offset="100%" stop-color="#521508" />
+    </radialGradient>
+  </defs>
+
+  <!-- ========== FONDO Y RIM ========== -->
+    <rect x="-35" y="0" width="590" height="595" fill="#D4703A"/>
+  
+  <!-- Borde exterior con pulso LED anaranjado (fusión con el tono del diseño) -->
+  <circle cx="260" cy="280" r="270" fill="none" stroke-width="22">
+    <animate attributeName="stroke" 
+      values="#333333;#8B3218;#D4703A;#8B3218;#333333"
+      dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="260" cy="280" r="262" fill="none" stroke="#1A0A04" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Pulso de fondo sutil -->
+  <circle cx="260" cy="280" r="250" fill="none" stroke-width="30" opacity="0.08" filter="url(#rim_glow)">
+    <animate attributeName="stroke" values="#8B3218;#D4703A;#8B3218" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.04;0.12;0.04" dur="6s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ========== PIEZAS DEL MONOGRAMA CON METAL DINÁMICO ========== -->
+  <g id="MONOGRAM" filter="url(#dynamic_metal)">
+    
+    <!-- ① PUENTE HORIZONTAL (con barrido de luz adicional) -->
+    <rect x="178" y="88" width="88" height="36" rx="18" fill="url(#metal_grad)" filter="url(#shadow_soft)"/>
+    <rect x="178" y="88" width="88" height="36" rx="18" fill="url(#sweep_vertical)" opacity="0.6"/>
+
+    <!-- ② FUSTE IZQUIERDO (j) — la espiral -->
+    <path d="
+      M 195,88
+      L 192,390
+      C 191,418 187,445 174,465
+      C 160,488 138,505 112,510
+      C  85,515  57,504  41,483
+      C  25,462  26,434  41,414
+      C  55,394  80,387 103,395
+      C 123,402 137,420 136,441
+      C 135,458 124,471 110,474
+      C  96,477  83,469  78,456
+      C  73,444  79,431  91,428
+      C 101,425 113,431 115,442
+    "
+    fill="none" stroke="url(#metal_grad)" stroke-width="40" 
+    stroke-linecap="round" stroke-linejoin="round" filter="url(#shadow_soft)"/>
+    
+    <!-- Barrido de luz sobre el fuste izquierdo -->
+    <path d="
+      M 195,88
+      L 192,390
+      C 191,418 187,445 174,465
+      C 160,488 138,505 112,510
+      C  85,515  57,504  41,483
+      C  25,462  26,434  41,414
+      C  55,394  80,387 103,395
+      C 123,402 137,420 136,441
+      C 135,458 124,471 110,474
+      C  96,477  83,469  78,456
+      C  73,444  79,431  91,428
+      C 101,425 113,431 115,442
+    "
+    fill="none" stroke="url(#sweep_vertical)" stroke-width="40" 
+    stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+
+    <!-- ③ FUSTE DERECHO (R) — recto -->
+    <path d="M 248,88 L 248,308"
+          fill="none" stroke="url(#metal_grad)" stroke-width="44" 
+          stroke-linecap="round" filter="url(#shadow_soft)"/>
+    
+    <!-- Barrido de luz sobre el fuste derecho -->
+    <path d="M 248,88 L 248,308"
+          fill="none" stroke="url(#sweep_vertical)" stroke-width="44" 
+          stroke-linecap="round" opacity="0.7"/>
+
+    <!-- ④ LÓBULO DE LA R con hueco interior (evenodd) -->
+    <path d="
+      M 248,95
+      C 296,86  364,90  404,112
+      C 446,136 464,174 460,214
+      C 456,252 432,280 396,294
+      C 372,303 342,306 314,304
+      L 248,302
+      Z
+      M 270,138
+      C 300,132 336,136 360,152
+      C 382,167 390,192 383,216
+      C 376,238 356,252 332,256
+      C 312,259 292,256 278,252
+      L 270,250
+      Z
+    "
+    fill="url(#metal_grad)" fill-rule="evenodd" filter="url(#shadow_soft)"/>
+
+    <!-- ⑤ PATA DIAGONAL R -->
+    <path d="
+      M 314,304
+      C 332,304 350,310 364,324
+      C 382,342 424,398 450,436
+      C 470,463 482,488 478,506
+      C 475,518 463,522 451,518
+      C 437,513 422,496 404,472
+      C 379,441 338,382 316,352
+      C 294,323 274,308 260,304
+      Z
+    "
+    fill="url(#metal_dark)" filter="url(#shadow_soft)"/>
+
+  </g>
+
+  <!-- ========== ESFERA CENTRAL (bolita de la j) CON ANILLOS ORBITALES ========== -->
+  <g id="CORE_SYSTEM" cursor="pointer">
+    
+    <!-- ANILLOS ORBITALES (detrás de la esfera) -->
+    <!-- Anillo 1 - rotación horaria -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate"
+        from="-20 221 58" to="340 221 58" dur="10s" repeatCount="indefinite"/>
+      <ellipse cx="221" cy="58" rx="85" ry="25" fill="none" stroke-width="5" filter="url(#glow_subtle)">
+        <animate attributeName="stroke" values="#D4703A;#F0A060;#FFD080;#F0A060;#D4703A" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+
+    <!-- Anillo 2 - rotación antihoraria (desfasada) -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate"
+        from="20 221 58" to="-340 221 58" dur="15s" repeatCount="indefinite"/>
+      <ellipse cx="221" cy="58" rx="85" ry="25" fill="none" stroke-width="5" filter="url(#glow_subtle)">
+        <animate attributeName="stroke" values="#8B3218;#D4703A;#F0A060;#D4703A;#8B3218" dur="4s" begin="2s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+
+    <!-- ESFERA (agrandada +35%: radio original 33 → 45) -->
+    <circle id="core_sphere" cx="221" cy="58" r="45" fill="url(#sphere_chrome)" filter="url(#shadow_soft)">
+      <animate attributeName="r" values="45;48;45" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Highlight estático (simula reflejo) -->
+    <ellipse cx="208" cy="44" rx="14" ry="8" fill="white" opacity="0.4" transform="rotate(-25 208 44)"/>
+
+    <!-- Pulso LED alrededor de la esfera (efecto anillo luminoso) -->
+    <circle cx="221" cy="58" r="49" fill="none" filter="url(#led_glow)">
+      <animate attributeName="stroke" values="#8B3218;#D4703A;#F0A060;#FFD080;#F0A060;#D4703A;#8B3218" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-width" values="1;2;4;6;4;2;1" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.5;0.8;1;0.8;0.5;0.2" dur="5s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Destello LED blanco adicional -->
+    <ellipse 
+      cx="210" 
+      cy="42" 
+      rx="8" 
+      ry="5" 
+      fill="#FFD080" 
+      opacity="0" 
+      transform="rotate(-25 210 42)" 
+      filter="url(#led_glow)">
+      <animate attributeName="opacity" values="0;0;0.6;0.9;0.6;0;0" dur="5s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  
+  <!-- ========== SCRIPT INTERACTIVO ========== -->
+  <script>
+    <![CDATA[
+    const svg = document.getElementById('JR_MONOGRAM_FUSION');
+    const light = document.getElementById('light_source');
+    const core = document.getElementById('CORE_SYSTEM');
+    const sphere = document.getElementById('core_sphere');
+
+    // 1. LUZ DINÁMICA QUE SIGUE AL RATÓN (efecto 3D sobre el metal)
+    svg.addEventListener('mousemove', (e) => {
+      const rect = svg.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (520 / rect.width);
+      const y = (e.clientY - rect.top) * (560 / rect.height);
+      light.setAttribute('x', x);
+      light.setAttribute('y', y);
+    });
+
+    // 2. CAMBIO DE COLOR DE LA ESFERA CON TECLADO
+    document.addEventListener('keydown', (e) => {
+      if(e.key === '1') {
+        sphere.style.fill = 'url(#core_pulse)';      // Modo Stealth (naranja/ámbar)
+      } else if(e.key === '2') {
+        sphere.style.fill = '#FF0000';               // Modo Combat (rojo)
+      } else if(e.key === '3') {
+        sphere.style.fill = '#FFFFFF';               // Modo Hyperdrive (blanco)
+      }
+    });
+
+    // 3. ONDA EXPANSIVA AL HACER CLIC EN LA ESFERA
+    core.addEventListener('click', () => {
+      const shockwave = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      shockwave.setAttribute("cx", "221");
+      shockwave.setAttribute("cy", "58");
+      shockwave.setAttribute("r", "45");
+      shockwave.setAttribute("fill", "none");
+      shockwave.setAttribute("stroke", "#FF4500");
+      shockwave.setAttribute("stroke-width", "8");
+      svg.appendChild(shockwave);
+
+      shockwave.animate([
+        { r: 45, opacity: 1 },
+        { r: 300, opacity: 0 }
+      ], { duration: 600 }).onfinish = () => shockwave.remove();
+    });]]>
+  </script>
+</svg>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitor de Ventas | Infantil Muebles JR</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F7F5F2;color:#2B2B2B;font-size:13px}
+header{background:#fff;border-bottom:1px solid #E0D9D0;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:28px;height:28px;background:#C47A3A;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.logo-name{font-size:14px;font-weight:600}
+.logo-name span{color:#C47A3A}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.week-nav{display:flex;align-items:center;gap:6px}
+.wnav{background:none;border:1px solid #DDD;border-radius:5px;padding:4px 10px;cursor:pointer;font-size:12px;color:#555}
+.wnav:hover{background:#F0F0F0}
+.wlabel{font-size:12px;font-weight:500;font-family:monospace;color:#555;min-width:130px;text-align:center}
+.badge-access{font-size:11px;background:#EAF3DE;color:#3B6D11;padding:3px 10px;border-radius:4px;border:1px solid #C0DD97}
+.badge-live{font-size:11px;background:#FCEBEB;color:#C62828;padding:3px 10px;border-radius:4px;border:1px solid #FFCDD2;display:flex;align-items:center;gap:4px}
+.live-dot{width:6px;height:6px;background:#E24B4A;border-radius:50%;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.btn-refresh{background:none;border:1px solid #DDD;border-radius:5px;padding:4px 10px;cursor:pointer;font-size:12px;color:#555}
+.btn-refresh:hover{background:#F0F0F0}
+main{padding:16px;max-width:1280px;margin:0 auto}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.stat{background:#fff;border:1px solid #E0D9D0;border-radius:10px;padding:12px 14px}
+.stat-val{font-size:22px;font-weight:700;margin-bottom:2px}
+.stat-lbl{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.4px}
+.sv-g{color:#1D9E75}.sv-a{color:#BA7517}.sv-r{color:#E24B4A}.sv-b{color:#185FA5}.sv-p{color:#534AB7}
+.legend{display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:#666}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+.lg-c{background:#1D9E75}.lg-o{background:#BA7517}.lg-e{background:#E24B4A}.lg-n{background:#534AB7}.lg-f{background:#CCC}
+.tabs{display:flex;gap:2px;margin-bottom:12px;border-bottom:1px solid #E0D9D0;padding-bottom:0}
+.tab{padding:8px 16px;cursor:pointer;font-size:12px;font-weight:500;color:#888;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.active{color:#C47A3A;border-bottom-color:#C47A3A}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.cal-wrap{background:#fff;border:1px solid #E0D9D0;border-radius:10px;overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:780px}
+thead th{font-size:11px;font-weight:600;color:#666;padding:9px 7px;text-align:center;border:0.5px solid #EEE;background:#FAFAFA;text-transform:uppercase;letter-spacing:.5px}
+thead th.th-hr{width:56px;background:#F5F5F5}
+thead th.th-today{background:#E6F1FB;color:#185FA5}
+td{border:0.5px solid #F0EDE8;vertical-align:top;height:58px;width:calc((100% - 56px)/7)}
+td.hr-cell{font-size:11px;font-weight:500;color:#888;text-align:center;padding:4px 2px;background:#FAFAFA;vertical-align:middle;font-family:monospace;width:56px}
+td.today-col{background:#FAFFF8}
+.appt{width:100%;height:100%;padding:5px 6px;cursor:pointer;border:none;background:none;text-align:left;display:block}
+.appt:hover{opacity:.85}
+.appt.CONFIRMED{background:#E1F5EE;border-left:3px solid #1D9E75}
+.appt.PENDING_OXXO{background:#FAEEDA;border-left:3px solid #BA7517}
+.appt.EXPIRED,.appt.CANCELLED{background:#FCEBEB;border-left:3px solid #E24B4A;opacity:.7}
+.appt.NO_SHOW{background:#EEEDFE;border-left:3px solid #534AB7}
+.appt.RESCHEDULED{background:#E6F1FB;border-left:3px solid #185FA5}
+.appt-name{font-size:12px;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appt.CONFIRMED .appt-name{color:#085041}
+.appt.PENDING_OXXO .appt-name{color:#633806}
+.appt.EXPIRED .appt-name,.appt.CANCELLED .appt-name{color:#791F1F}
+.appt.NO_SHOW .appt-name{color:#3C3489}
+.appt.RESCHEDULED .appt-name{color:#0C447C}
+.appt-sku{font-size:10px;font-family:monospace;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;color:#888}
+.appt-badge{display:inline-flex;font-size:10px;padding:1px 5px;border-radius:3px;font-weight:600}
+.b-conf{background:#9FE1CB;color:#085041}
+.b-oxxo{background:#FAC775;color:#633806}
+.b-exp{background:#F7C1C1;color:#791F1F}
+.b-nos{background:#AFA9EC;color:#26215C}
+.b-res{background:#B5D4F4;color:#042C53}
+.timeline-wrap{background:#fff;border:1px solid #E0D9D0;border-radius:10px;padding:16px;overflow-x:auto}
+.timeline{display:flex;gap:0;min-width:600px;position:relative;margin-top:8px}
+.timeline:before{content:'';position:absolute;top:20px;left:0;right:0;height:2px;background:#E0D9D0;z-index:0}
+.tl-item{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+.tl-dot{width:16px;height:16px;border-radius:50%;border:2px solid #fff;margin-bottom:6px}
+.tl-dot.done{background:#1D9E75}
+.tl-dot.pending{background:#BA7517}
+.tl-dot.bad{background:#E24B4A}
+.tl-dot.empty{background:#DDD}
+.tl-label{font-size:10px;color:#888;text-align:center;line-height:1.3}
+.tl-label strong{display:block;color:#555;font-size:11px}
+.log-wrap{background:#1E1E1E;border-radius:10px;padding:14px;font-family:monospace;font-size:11px;color:#D4D4D4;max-height:240px;overflow-y:auto}
+.log-line{padding:2px 0;line-height:1.5}
+.log-ts{color:#888}
+.log-event{color:#9FE1CB}
+.log-event.WARN{color:#FAC775}
+.log-event.ERR{color:#F09595}
+.log-detail{color:#D4D4D4}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:14px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto}
+.modal-hdr{padding:18px 20px 14px;border-bottom:1px solid #F0EDE8;display:flex;align-items:flex-start;justify-content:space-between}
+.modal-title{font-size:15px;font-weight:700}
+.modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:#888}
+.modal-body{padding:18px 20px}
+.modal-section{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin:14px 0 8px}
+.modal-section:first-child{margin-top:0}
+.mrow{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #F7F5F2}
+.mrow:last-child{border:none}
+.mrow span:first-child{color:#888}
+.mrow strong{color:#2B2B2B;font-weight:600;font-size:12px;text-align:right;max-width:200px;word-break:break-all}
+.status-select{width:100%;padding:9px 11px;border:1px solid #DDD;border-radius:7px;font-size:13px;color:#2B2B2B;outline:none;margin-bottom:10px}
+.modal-actions{padding:0 20px 18px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.m-btn{padding:10px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:600}
+.m-cancel{background:#FCEBEB;color:#C62828}
+.m-save{background:#1D9E75;color:#fff}
+.m-dl{background:#E6F1FB;color:#185FA5}
+.tl-mini{display:flex;gap:4px;margin-top:6px}
+.tl-mini-dot{width:10px;height:10px;border-radius:50%}
+.clients-table{width:100%;border-collapse:collapse;font-size:12px}
+.clients-table th{padding:8px 10px;text-align:left;font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #E0D9D0;background:#FAFAFA}
+.clients-table td{padding:8px 10px;border-bottom:1px solid #F7F5F2;vertical-align:middle}
+.clients-table tr:hover td{background:#F7F5F2}
+.status-badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.dl-log-btn{background:none;border:1px solid #DDD;border-radius:5px;padding:4px 10px;cursor:pointer;font-size:12px;color:#555}
+.dl-log-btn:hover{background:#F0F0F0}
+</style>
+
+    
+    
+</head>
+<body>
+
+<header>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <div class="logo">
+    <div class="logo-icon">M</div>
+    <div class="logo-name">Infantil <span>Muebles JR</span></div>
+  </div>
+  <div class="hdr-right">
+    <div class="badge-live"><span class="live-dot"></span>Demo local</div>
+    <div class="week-nav">
+      <button class="wnav" onclick="shiftWeek(-1)">&#8592;</button>
+      <div class="wlabel" id="week-label">-</div>
+      <button class="wnav" onclick="shiftWeek(1)">&#8594;</button>
+    </div>
+    <button class="btn-refresh" onclick="render()">&#x21BB; Actualizar</button>
+    <button class="dl-log-btn" onclick="downloadLog()">&#x2193; info.log</button>
+    <div class="badge-access">Admin &bull; Demo</div>
+  </div>
+</header>
+
+<main>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-val sv-g" id="s-conf">0</div><div class="stat-lbl">Confirmadas</div></div>
+    <div class="stat"><div class="stat-val sv-a" id="s-oxxo">0</div><div class="stat-lbl">Apartados pend.</div></div>
+    <div class="stat"><div class="stat-val sv-r" id="s-exp">0</div><div class="stat-lbl">Vencidas / cancel.</div></div>
+    <div class="stat"><div class="stat-val sv-p" id="s-nos">0</div><div class="stat-lbl">No entregado</div></div>
+    <div class="stat"><div class="stat-val sv-b" id="s-rev">$0</div><div class="stat-lbl">Ventas hoy</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('agenda',this)">Entregas / Apartados</div>
+    <div class="tab" onclick="showTab('clientes',this)">Clientes / Pedidos</div>
+    <div class="tab" onclick="showTab('timeline',this)">Timeline</div>
+    <div class="tab" onclick="showTab('log',this)">Info.log</div>
+  </div>
+
+  <div class="tab-panel active" id="tab-agenda">
+    <div class="legend">
+      <div class="leg"><div class="leg-dot lg-c"></div>Pagado / Entregado</div>
+      <div class="leg"><div class="leg-dot lg-o"></div>Apartado (Pendiente)</div>
+      <div class="leg"><div class="leg-dot lg-e"></div>Cancelado / Vencido</div>
+      <div class="leg"><div class="leg-dot lg-n"></div>No entregado</div>
+    </div>
+    <div class="cal-wrap">
+      <table>
+        <thead id="cal-head"></thead>
+        <tbody id="cal-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-clientes">
+    <div style="background:#fff;border:1px solid #E0D9D0;border-radius:10px;overflow:hidden;overflow-x:auto">
+      <table class="clients-table">
+        <thead>
+          <tr><th>SKU</th><th>Cliente</th><th>Producto</th><th>Total</th><th>Apartado</th><th>Estado</th><th>Fecha</th></tr>
+        </thead>
+        <tbody id="clients-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-timeline">
+    <div class="timeline-wrap">
+      <div id="timeline-list"></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-log">
+    <div class="log-wrap" id="log-wrap"></div>
+  </div>
+</main>
+
+<div class="modal-bg" id="modal-bg" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div><div class="modal-title" id="m-title">-</div><div id="m-sku" style="font-size:12px;color:#888">-</div></div>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">Cliente</div>
+      <div class="mrow"><span>Nombre</span><strong id="d-nombre">-</strong></div>
+      <div class="mrow"><span>Email</span><strong id="d-email">-</strong></div>
+      <div class="mrow"><span>Teléfono</span><strong id="d-tel">-</strong></div>
+      <div class="modal-section">Pedido</div>
+      <div class="mrow"><span>Producto</span><strong id="d-svc">-</strong></div>
+      <div class="mrow"><span>Total</span><strong id="d-monto">-</strong></div>
+      <div class="mrow"><span>Apartado</span><strong id="d-apartado">-</strong></div>
+      <div class="mrow"><span>Método</span><strong id="d-method">-</strong></div>
+      <div class="modal-section">Estado</div>
+      <select class="status-select" id="d-status-sel">
+        <option value="CONFIRMED">Pagado / Entregado</option>
+        <option value="PENDING_OXXO">Apartado pendiente</option>
+        <option value="CANCELLED">Cancelado</option>
+        <option value="NO_SHOW">No entregado</option>
+        <option value="RESCHEDULED">Reagendado</option>
+      </select>
+      <div class="modal-section">Log</div>
+      <div class="log-wrap" style="max-height:120px" id="d-log"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="m-btn m-cancel" onclick="closeModal()">Cerrar</button>
+      <button class="m-btn m-save" onclick="saveStatus()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// PAPERNEWS.HTML - MONITOR DE VENTAS (DEMO CON DATOS LOCALES)
+// Para conectar a API real:
+//   1. Reemplazar 'getReservas()' y 'saveReservas()' por llamadas fetch a /api/ventas
+//   2. Ajustar constantes de estados al esquema de backend
+// ============================================================
+const LS_KEY='imjr_demo_ventas';
+const HOURS=['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+const DAY_NAMES=['Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
+const MESES=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+let weekOffset=0, activeKey=null;
+
+// DATOS DE EJEMPLO (se poblarán si no existen)
+function initDemoData() {
+  if(localStorage.getItem(LS_KEY)) return;
+  const demo = [];
+  const hoy = new Date();
+  for(let i=0;i<20;i++) {
+    const d = new Date(hoy);
+    d.setDate(hoy.getDate() + (i%7) - 3);
+    const sku = 'PED-'+Math.floor(Math.random()*10000);
+    const estados = ['CONFIRMED','PENDING_OXXO','CANCELLED','NO_SHOW','RESCHEDULED'];
+    const status = estados[Math.floor(Math.random()*estados.length)];
+    demo.push({
+      sku: sku,
+      nombre: 'Cliente '+ (i+1),
+      email: `cliente${i+1}@mail.com`,
+      telefono: '33 1234 5678',
+      slot: DAY_NAMES[d.getDay()===0?6:d.getDay()-1]+' '+HOURS[Math.floor(Math.random()*HOURS.length)],
+      service: 'Mueble infantil',
+      monto: 1500 + Math.random()*5000,
+      apartado: Math.random()>0.5 ? (Math.random()*0.6+0.35)*100 : null,
+      method: 'Tarjeta',
+      status: status,
+      created_at: d.toISOString(),
+      log: [{ts:new Date().toISOString(), event:'CREATED', detail:'Pedido creado en demo'}]
+    });
+  }
+  localStorage.setItem(LS_KEY,JSON.stringify(demo));
+}
+initDemoData();
+
+function getReservas(){return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}
+function saveReservas(arr){localStorage.setItem(LS_KEY,JSON.stringify(arr));}
+
+function logEvent(sku,event,detail){
+  const arr=getReservas();
+  const r=arr.find(x=>x.sku===sku);
+  if(r){r.log=r.log||[]; r.log.push({ts:new Date().toISOString(),event,detail}); saveReservas(arr);}
+}
+
+function getWeekDates(offset){
+  const now=new Date(); now.setDate(now.getDate()+offset*7);
+  const mon=new Date(now); mon.setDate(mon.getDate()-(mon.getDay()||7)+1);
+  const d=[]; for(let i=0;i<7;i++){const x=new Date(mon); x.setDate(mon.getDate()+i); d.push(x);}
+  return d;
+}
+function fmt2(d){return d.getDate().toString().padStart(2,'0');}
+
+function slotToKey(slot,dates){
+  for(let i=0;i<dates.length;i++){
+    if(slot.startsWith(DAY_NAMES[i])){
+      const hr=slot.split(' ').pop();
+      return hr+'-'+i;
+    }
+  } return null;
+}
+
+function render(){
+  const dates=getWeekDates(weekOffset);
+  const d0=dates[0],d6=dates[6];
+  document.getElementById('week-label').textContent= fmt2(d0)+' '+MESES[d0.getMonth()]+' - '+fmt2(d6)+' '+MESES[d6.getMonth()]+' '+d6.getFullYear();
+  const reservas=getReservas();
+  const slotMap={};
+  reservas.forEach(r=>{const key=slotToKey(r.slot,dates); if(key)slotMap[key]=r;});
+
+  let hdr='<tr><th class="th-hr">HORA</th>';
+  dates.forEach((d,i)=>{const isTod=d.toDateString()===new Date().toDateString(); hdr+=`<th class="${isTod?'th-today':''}">${DAY_NAMES[i]} ${fmt2(d)}</th>`;});
+  hdr+='</tr>';
+  document.getElementById('cal-head').innerHTML=hdr;
+
+  let rows='';
+  HOURS.forEach(hr=>{
+    rows+=`<tr><td class="hr-cell">${hr}</td>`;
+    for(let d=0;d<7;d++){
+      const isTod=dates[d].toDateString()===new Date().toDateString();
+      const key=hr+'-'+d;
+      const r=slotMap[key];
+      if(r){
+        const badge=r.status==='CONFIRMED'?'<span class="appt-badge b-conf">Pagado</span>':
+          r.status==='PENDING_OXXO'?'<span class="appt-badge b-oxxo">Apartado</span>':
+          r.status==='NO_SHOW'?'<span class="appt-badge b-nos">No entregado</span>':
+          r.status==='RESCHEDULED'?'<span class="appt-badge b-res">Reagendado</span>':
+          '<span class="appt-badge b-exp">Cancelado</span>';
+        rows+=`<td class="${isTod?'today-col':''}"><button class="appt ${r.status}" onclick="openModal('${r.sku}')"><span class="appt-name">${r.nombre}</span><span class="appt-sku">${r.sku}</span>${badge}</button></td>`;
+      } else rows+=`<td class="${isTod?'today-col':''}" style="background:#FAFAFA"></td>`;
+    }
+    rows+='</tr>';
+  });
+  document.getElementById('cal-body').innerHTML=rows;
+
+  calcStats(reservas);
+  renderClients(reservas);
+  renderTimeline(reservas);
+  renderLog(reservas);
+}
+
+function calcStats(reservas){
+  document.getElementById('s-conf').textContent=reservas.filter(r=>r.status==='CONFIRMED').length;
+  document.getElementById('s-oxxo').textContent=reservas.filter(r=>r.status==='PENDING_OXXO').length;
+  document.getElementById('s-exp').textContent=reservas.filter(r=>r.status==='CANCELLED').length;
+  document.getElementById('s-nos').textContent=reservas.filter(r=>r.status==='NO_SHOW').length;
+  const hoyVentas=reservas.filter(r=>r.status==='CONFIRMED' && new Date(r.created_at).toDateString()===new Date().toDateString()).reduce((s,r)=>s+r.monto,0);
+  document.getElementById('s-rev').textContent='$'+hoyVentas.toLocaleString('es-MX');
+}
+
+function renderClients(reservas){
+  const statusBg={CONFIRMED:'#E1F5EE',PENDING_OXXO:'#FAEEDA',CANCELLED:'#FCEBEB',NO_SHOW:'#EEEDFE',RESCHEDULED:'#E6F1FB'};
+  const statusColor={CONFIRMED:'#085041',PENDING_OXXO:'#633806',CANCELLED:'#791F1F',NO_SHOW:'#26215C',RESCHEDULED:'#042C53'};
+  let rows='';
+  reservas.forEach(r=>{
+    const bg=statusBg[r.status]||'#F7F5F2';
+    const col=statusColor[r.status]||'#2B2B2B';
+    const apartadoText=r.apartado?r.apartado+'%':'--';
+    rows+=`<tr><td style="font-family:monospace">${r.sku}</td><td>${r.nombre}</td><td>${r.service}</td><td>$${r.monto.toLocaleString('es-MX')}</td><td>${apartadoText}</td><td><span class="status-badge" style="background:${bg};color:${col}">${r.status}</span></td><td>${new Date(r.created_at).toLocaleDateString('es-MX')}</td></tr>`;
+  });
+  document.getElementById('clients-body').innerHTML=rows||'<tr><td colspan="7">Sin pedidos</td></tr>';
+}
+
+function renderTimeline(reservas){
+  const STATES=[{key:'CREATED',label:'Creado',color:'#888'},{key:'CONFIRMED',label:'Pagado',color:'#1D9E75'},{key:'DELIVERED',label:'Entregado',color:'#1D9E75'},{key:'CANCELLED',label:'Cancelado',color:'#E24B4A'}];
+  let html='';
+  reservas.slice(0,10).forEach(r=>{
+    const events=(r.log||[]).map(l=>l.event);
+    html+=`<div style="margin-bottom:14px;border-bottom:1px solid #F0EDE8;padding-bottom:14px"><div style="font-weight:600">${r.nombre} — ${r.sku}</div><div style="display:flex;gap:0;position:relative;margin-top:8px"><div style="position:absolute;top:7px;left:0;right:0;height:2px;background:#E0D9D0;z-index:0"></div>`;
+    STATES.forEach(s=>{
+      const done=events.includes(s.key)||r.status===s.key;
+      const dotColor=done?s.color:'#DDD';
+      html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;z-index:1"><div style="width:14px;height:14px;border-radius:50%;background:${dotColor};border:2px solid #fff;margin-bottom:4px"></div><div style="font-size:10px;color:${done?s.color:'#BBB'}">${s.label}</div></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById('timeline-list').innerHTML=html||'Sin eventos';
+}
+
+function renderLog(reservas){
+  const allLog=[]; reservas.forEach(r=>{(r.log||[]).forEach(l=>allLog.push({...l,sku:r.sku,nombre:r.nombre}));});
+  allLog.sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  let html=''; allLog.forEach(l=>{
+    const ts=new Date(l.ts).toLocaleTimeString('es-MX');
+    html+=`<div class="log-line"><span class="log-ts">[${ts}]</span> <span class="log-event">${l.event}</span> <span style="color:#888">${l.sku}</span> — ${l.detail||''}</div>`;
+  });
+  document.getElementById('log-wrap').innerHTML=html||'Sin actividad';
+}
+
+function openModal(sku){
+  const r=getReservas().find(x=>x.sku===sku);
+  if(!r)return;
+  activeKey=sku;
+  document.getElementById('m-title').textContent=r.nombre;
+  document.getElementById('m-sku').textContent=r.sku;
+  document.getElementById('d-nombre').textContent=r.nombre;
+  document.getElementById('d-email').textContent=r.email;
+  document.getElementById('d-tel').textContent=r.telefono;
+  document.getElementById('d-svc').textContent=r.service;
+  document.getElementById('d-monto').textContent='$'+r.monto.toLocaleString('es-MX');
+  document.getElementById('d-apartado').textContent=r.apartado?r.apartado+'%':'Pago completo';
+  document.getElementById('d-method').textContent=r.method;
+  document.getElementById('d-status-sel').value=r.status;
+  const logHtml=(r.log||[]).map(l=>`<div class="log-line">[${new Date(l.ts).toLocaleTimeString()}] ${l.event} — ${l.detail||''}</div>`).join('');
+  document.getElementById('d-log').innerHTML=logHtml||'Sin eventos';
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function closeModal(e){if(e&&e.target!==document.getElementById('modal-bg'))return; document.getElementById('modal-bg').classList.remove('open');}
+
+function saveStatus(){
+  if(!activeKey)return;
+  const newStatus=document.getElementById('d-status-sel').value;
+  const arr=getReservas();
+  const r=arr.find(x=>x.sku===activeKey);
+  if(r){
+    const old=r.status;
+    r.status=newStatus;
+    r.log=r.log||[];
+    r.log.push({ts:new Date().toISOString(),event:'STATUS_CHANGE',detail:old+' → '+newStatus});
+    saveReservas(arr);
+    closeModal();
+    render();
+  }
+}
+
+function showTab(name,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+function shiftWeek(n){weekOffset+=n;render();}
+function downloadLog(){
+  const reservas=getReservas();
+  let content='# MONITOR VENTAS IMJR\n# '+new Date().toISOString()+'\n\n';
+  reservas.forEach(r=>{
+    content+=`--- ${r.sku} ---\nNombre: ${r.nombre}\nTotal: $${r.monto}\nApartado: ${r.apartado||'100'}%\nEstado: ${r.status}\nEventos:\n`;
+    (r.log||[]).forEach(l=>content+=`  [${l.ts}] ${l.event} - ${l.detail}\n`);
+    content+='\n';
+  });
+  const a=document.createElement('a'); a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(content); a.download='imjr_monitor.log'; a.click();
+}
+render();
+setInterval(render,30000);
+</script>
+  
+<script>
+(function() {
+    var btns = document.querySelectorAll('button');
+    for(var i=0; i<btns.length; i++) {
+        var btn = btns[i];
+        if(!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+            btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+        }
+    }
+})();
+</script>
+<script>
+(function() {
+  var toggle = document.getElementById('menuToggle');
+  var nav = document.getElementById('navLinks');
+  if (toggle && nav) {
+    toggle.addEventListener('click', function() {
+      nav.classList.toggle('open');
+    });
+    // Cerrar menú al hacer clic en un enlace
+    var links = nav.querySelectorAll('a');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function() {
+        nav.classList.remove('open');
+      });
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿/* ================================================================
+   tokens.css -- IMJR-WEB Design Tokens  
+   OSTP @echoShift  |  Pipeline: Leviatan
+   ================================================================ */
+:root {
+  --vz-primary:        #3D6B4F;
+  --vz-primary-light:  #7AAB88;
+  --vz-primary-dark:   #2A4E38;
+  --vz-accent:         #C4A25A;
+  --vz-accent-light:   #E8D5A3;
+  --vz-bg:             #EDE5D8;
+  --vz-bg-alt:         #FAF6EE;
+  --vz-white:          #FFFFFF;
+  --vz-text:           #2C2C24;
+  --vz-text-muted:     #7A7060;
+  --vz-text-light:     #9A8A70;
+  --vz-border:         #D9D0C0;
+  --vz-border-light:   #EDE5D8;
+
+  --vz-font-display: 'Palatino Linotype', Palatino, Georgia, serif;
+  --vz-font-body:    'Trebuchet MS', Verdana, sans-serif;
+  --vz-font-mono:    'Courier New', monospace;
+
+  --vz-sp-xs:  4px;
+  --vz-sp-sm:  8px;
+  --vz-sp-md:  16px;
+  --vz-sp-lg:  32px;
+  --vz-sp-xl:  64px;
+  --vz-sp-2xl: 96px;
+
+  --vz-radius-sm:   4px;
+  --vz-radius-md:   8px;
+  --vz-radius-lg:   16px;
+  --vz-radius-pill: 999px;
+
+  --vz-whatsapp:      #25D366;
+  --vz-whatsapp-dark: #128C7E;
+
+  --vz-z-nav:   100;
+  --vz-z-modal: 200;
+  --vz-z-toast: 300;
+
+  --vz-shadow-sm: 0 1px 4px rgba(61,107,79,.08);
+  --vz-shadow-md: 0 4px 16px rgba(61,107,79,.10);
+}

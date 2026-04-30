@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Colecciones | Infantil & Muebles JR</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <meta name="description" content="Explora nuestras colecciones de muebles para hogar, jardín, cocina e infantil. Calidad y diseño en cada pieza.">
+  
+  <!-- Estilos globales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/fx.css">
+  
+  <style>
+    /* Estilos específicos para colecciones */
+    .funnel-fan {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin: 48px 0;
+    }
+    .funnel-fan-card {
+      background: var(--vz-bg-alt);
+      border-radius: var(--vz-radius-lg);
+      padding: 32px 24px;
+      width: 220px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid var(--vz-border);
+    }
+    .funnel-fan-card:hover, .funnel-fan-card.selected {
+      transform: translateY(-10px);
+      border-color: var(--vz-accent);
+      box-shadow: 0 12px 28px rgba(61,107,79,0.15);
+      background: rgba(196,162,90,0.05);
+    }
+    .funnel-icon { font-size: 56px; margin-bottom: 16px; }
+    .funnel-title { font-family: var(--vz-font-display); font-size: 24px; color: var(--vz-primary); margin-bottom: 8px; }
+    .funnel-desc { font-size: 13px; color: var(--vz-text-muted); }
+    .productos-destacados { margin-top: 48px; }
+    .loading-spinner {
+      text-align: center;
+      padding: 40px;
+      color: var(--vz-text-muted);
+    }
+    .error-message {
+      text-align: center;
+      padding: 40px;
+      color: #c44;
+      background: #ffe0e0;
+      border-radius: var(--vz-radius-md);
+    }
+    /* Ajustes responsivos */
+    @media (max-width: 768px) {
+      .funnel-fan { gap: 16px; }
+      .funnel-fan-card { width: 160px; padding: 20px 16px; }
+      .funnel-icon { font-size: 40px; }
+      .funnel-title { font-size: 18px; }
+    }
+    @media (max-width: 480px) {
+      .funnel-fan-card { width: calc(50% - 16px); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navegación principal (responsiva con hamburguesa) -->
+<nav class="vz-nav">
+  <div class="vz-container">
+    <div class="vz-nav-inner">
+      <a href="index.html" class="vz-nav-logo">Infantil & Muebles JR</a>
+      <ul class="vz-nav-links" id="nav-menu">
+        <li><a href="catalogo-landingpage.html">Productos</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="colecciones.html" class="active">Colecciones</a></li>
+        <li><a href="paypage.html" class="vz-nav-cta">Cotizar</a></li>
+      </ul>
+      <button class="vz-nav-burger" id="nav-burger" aria-label="Menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Sección principal de colecciones -->
+<section class="vz-section">
+  <div class="vz-container">
+    <p class="vz-eyebrow">Explora por categoría</p>
+    <h1 class="vz-h1">Nuestras colecciones</h1>
+    <div class="funnel-fan" id="funnelFan">
+      <div class="funnel-fan-card selected" data-segment="hogar">
+        <div class="funnel-icon">🏠</div>
+        <div class="funnel-title">Hogar</div>
+        <div class="funnel-desc">Salas, comedores, credenzas</div>
+      </div>
+      <div class="funnel-fan-card" data-segment="jardin">
+        <div class="funnel-icon">🌿</div>
+        <div class="funnel-title">Jardín</div>
+        <div class="funnel-desc">Mesas, sillas, inflables</div>
+      </div>
+      <div class="funnel-fan-card" data-segment="cocina">
+        <div class="funnel-icon">🍽️</div>
+        <div class="funnel-title">Cocina</div>
+        <div class="funnel-desc">Estantes, garrafoneros, fruteros</div>
+      </div>
+      <div class="funnel-fan-card" data-segment="infantil">
+        <div class="funnel-icon">🧸</div>
+        <div class="funnel-title">Infantil</div>
+        <div class="funnel-desc">Cunas, jugueteros, carreolas</div>
+      </div>
+    </div>
+    <div id="productosColeccion" class="productos-destacados vz-grid-3">
+      <div class="loading-spinner">Cargando productos...</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="vz-footer">
+  <div class="vz-container">
+    <div class="vz-footer-grid">
+      <div><div class="vz-footer-title">Infantil & Muebles JR</div><p>Muebles y accesorios para toda la familia</p><p>Guadalajara, Jalisco</p></div>
+      <div><div class="vz-footer-title">Ubicación</div><p>Av. Valle de Zapopan 1372-2, Zapopan, Jal.</p></div>
+      <div><div class="vz-footer-title">Contacto</div><p><a href="https://wa.me/523334866318">33 3486 6318</a></p><p><a href="index.html">Inicio</a></p></div>
+    </div>
+    <div class="vz-footer-copy">&copy; 2026 Infantil & Muebles JR &nbsp;&middot;&nbsp; Desarrollado por <a href="https://ostp-echoshift.com" target="_blank" rel="noopener">OSTP @echoShift</a></div>
+  </div>
+</footer>
+
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/523334866318" class="vz-wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<script>
+  // =================== CARGAR PRODUCTOS POR CATEGORÍA ===================
+  async function cargarProductosPorCategoria(segmento) {
+    const contenedor = document.getElementById('productosColeccion');
+    if (!contenedor) return;
+    
+    contenedor.innerHTML = '<div class="loading-spinner">Cargando productos...</div>';
+    
+    try {
+      const respuesta = await fetch('data/productos.json');
+      if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+      const todos = await respuesta.json();
+      
+      const filtrados = todos.filter(p => p.categoria === segmento && p.visible !== false);
+      
+      if (filtrados.length === 0) {
+        contenedor.innerHTML = '<div class="loading-spinner">No hay productos en esta colección.</div>';
+        return;
+      }
+      
+      contenedor.innerHTML = filtrados.map(p => `
+        <div class="vz-service-card">
+          <span class="vz-service-cat vz-cat-${p.categoria}">${p.categoria}</span>
+          <div class="vz-service-name">${escapeHtml(p.nombre)}</div>
+          <div class="vz-service-desc">${escapeHtml(p.descripcion.substring(0, 120))}${p.descripcion.length > 120 ? '…' : ''}</div>
+          ${p.precio ? `<div class="vz-service-price">MX&#36;${p.precio.toLocaleString()}</div>` : `<div class="vz-service-price-free">Precio a consultar</div>`}
+          <a href="https://wa.me/523334866318?text=${encodeURIComponent('Hola, quiero información sobre ' + p.nombre)}" class="vz-btn-secondary" style="font-size:12px;margin-top:8px" target="_blank" rel="noopener">Consultar</a>
+        </div>
+      `).join('');
+      
+    } catch (error) {
+      console.error(error);
+      contenedor.innerHTML = '<div class="error-message">⚠️ Error al cargar productos.</div>';
+    }
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  // Eventos de los cards
+  const cards = document.querySelectorAll('.funnel-fan-card');
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      cards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      const segmento = card.dataset.segment;
+      cargarProductosPorCategoria(segmento);
+    });
+  });
+  
+  // Cargar categoría inicial (Hogar)
+  cargarProductosPorCategoria('hogar');
+  
+  // =================== MENÚ HAMBURGUESA ===================
+  const burger = document.getElementById('nav-burger');
+  const menu = document.getElementById('nav-menu');
+  if (burger && menu) {
+    burger.addEventListener('click', () => {
+      menu.classList.toggle('open');
+    });
+    // Cerrar al hacer clic en un enlace
+    const links = menu.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
+      });
+    });
+  }
+  
+  // =================== BOTONES SIN ACCIÓN (RESPALDO) ===================
+  (function() {
+    const btns = document.querySelectorAll('button');
+    for (let i = 0; i < btns.length; i++) {
+      const btn = btns[i];
+      if (!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+        btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+      }
+    }
+  })();
+</script>
+
+<!-- Partículas (efecto visual) -->
+<script src="assets/js/particles.js"></script>
+
+</body>
+</html>

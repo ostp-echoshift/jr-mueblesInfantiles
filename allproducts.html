@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Todos los productos | Infantil Muebles JR</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <meta name="description" content="Descubre toda nuestra colección de muebles infantiles, de jardín, cocina y hogar. Calidad y diseño para toda la familia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/fx.css">
+  <style>
+    /* Estilos específicos para la página de todos los productos */
+    .productos-header {
+      text-align: center;
+      padding: var(--vz-sp-xl) 0 var(--vz-sp-lg);
+      background: var(--vz-bg-alt);
+      border-bottom: 1px solid var(--vz-border);
+    }
+    .productos-header h1 {
+      font-family: var(--vz-font-display);
+      font-size: 2.8rem;
+      color: var(--vz-primary);
+      margin-bottom: 0.5rem;
+    }
+    .productos-header p {
+      color: var(--vz-text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--vz-sp-lg);
+      margin-top: var(--vz-sp-lg);
+    }
+    .producto-card {
+      background: var(--vz-bg-alt);
+      border: 1px solid var(--vz-border);
+      border-radius: var(--vz-radius-md);
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .producto-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--vz-shadow-md);
+    }
+    .producto-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #EADBC6;
+    }
+    .producto-info {
+      padding: var(--vz-sp-md);
+    }
+    .producto-nombre {
+      font-family: var(--vz-font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--vz-primary);
+      margin-bottom: 4px;
+    }
+    .producto-desc {
+      font-size: 0.85rem;
+      color: var(--vz-text-muted);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .producto-precio {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--vz-accent);
+      margin-bottom: 16px;
+    }
+    .btn-carrito {
+      background: var(--vz-primary);
+      color: white;
+      border: none;
+      padding: 10px 0;
+      width: 100%;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: var(--vz-font-body);
+    }
+    .btn-carrito:hover {
+      background: var(--vz-primary-dark);
+    }
+    /* Modal carrito */
+    .modal-cart {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-cart.open {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--vz-bg-alt);
+      max-width: 500px;
+      width: 90%;
+      border-radius: 20px;
+      padding: 1.5rem;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-family: var(--vz-font-display);
+      border-bottom: 1px solid var(--vz-border);
+      padding-bottom: 0.5rem;
+    }
+    .cart-items {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--vz-border-light);
+    }
+    .cart-item-info {
+      flex: 2;
+    }
+    .cart-item-title {
+      font-weight: 600;
+    }
+    .cart-item-price {
+      font-size: 0.8rem;
+      color: var(--vz-accent);
+    }
+    .cart-item-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .cart-item-actions button {
+      background: var(--vz-border);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .cart-total {
+      font-weight: bold;
+      text-align: right;
+      margin: 1rem 0;
+      font-size: 1.2rem;
+      border-top: 2px solid var(--vz-border);
+      padding-top: 0.8rem;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .modal-actions button {
+      flex: 1;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-vaciar {
+      background: #e0d5c5;
+      color: #5a3e2a;
+    }
+    .btn-finalizar {
+      background: var(--vz-primary);
+      color: white;
+    }
+    .btn-cerrar {
+      background: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      border: none;
+    }
+    @media (max-width: 768px) {
+      .productos-header h1 { font-size: 2rem; }
+    }
+    /* Ajustes responsivos adicionales */
+    @media (max-width: 480px) {
+      .productos-grid { gap: 16px; }
+      .producto-img { height: 160px; }
+      .producto-nombre { font-size: 1.1rem; }
+      .producto-precio { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVEGACIÓN (usando clases de components.css + botón hamburguesa) -->
+<nav class="vz-nav">
+  <div class="vz-container">
+    <div class="vz-nav-inner">
+      <a href="index.html" class="vz-nav-logo">Infantil Muebles JR</a>
+      <ul class="vz-nav-links" id="nav-menu">
+        <li><a href="colecciones.html">Colecciones</a></li>
+        <li><a href="catalogo-landingpage.html">Catálogo</a></li>
+        <li><a href="funnel.html">Personalizar</a></li>
+        <li><a href="paypage.html">Contacto</a></li>
+        <li><a href="salecar.html">Tienda</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="allproducts.html" class="active">Todos los productos</a></li>
+      </ul>
+      <button class="vz-nav-burger" id="nav-burger" aria-label="Menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenido principal -->
+<main>
+  <div class="productos-header">
+    <h1>Todos nuestros productos</h1>
+    <p>Muebles diseñados con materiales nobles, pensados para crecer contigo y tu familia.</p>
+  </div>
+
+  <div class="vz-container">
+    <div class="productos-grid" id="productosGrid"></div>
+  </div>
+</main>
+
+<!-- FOOTER (usando clases de components.css) -->
+<footer class="vz-footer">
+  <div class="vz-container">
+    <div class="vz-footer-grid">
+      <div>
+        <div class="vz-footer-title">Infantil & Muebles JR</div>
+        <p>Calidad, diseño y confianza</p>
+        <p>Guadalajara, Jalisco</p>
+      </div>
+      <div>
+        <div class="vz-footer-title">Ubicación</div>
+        <p>Av. Valle de Zapopan 1372-2, Zapopan, Jal.</p>
+      </div>
+      <div>
+        <div class="vz-footer-title">Contacto</div>
+        <p><a href="https://wa.me/523334866318" target="_blank" rel="noopener">33 3486 6318</a></p>
+        <p><a href="index.html">Volver al inicio</a></p>
+      </div>
+    </div>
+    <div class="vz-footer-copy">
+      &copy; 2026 Infantil & Muebles JR &nbsp;&middot;&nbsp;
+      Desarrollado por <a href="https://ostp-echoshift.com" target="_blank" rel="noopener">OSTP @echoShift</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/523334866318" class="vz-wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<!-- MODAL CARRITO -->
+<div id="cartModal" class="modal-cart">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span>🛒 Tu carrito</span>
+      <button class="btn-cerrar" id="closeModalBtn">&times;</button>
+    </div>
+    <div id="cartItemsList" class="cart-items"></div>
+    <div id="cartTotal" class="cart-total">Total: $0</div>
+    <div class="modal-actions">
+      <button id="emptyCartBtn" class="btn-vaciar">Vaciar carrito</button>
+      <button id="checkoutBtn" class="btn-finalizar">Finalizar compra</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// =================== PRODUCTOS CON RUTAS CORREGIDAS (según árbol de assets) ===================
+const productos = [
+  { id: 1, nombre: "Cuna", precio: 3490, img: "assets/img/productos/INFANTILES/cuneros/cuna.jpg", categoria: "infantil", descripcion: "Cuna de madera de pino, resistente y segura para tu bebé." },
+  { id: 2, nombre: "Estante", precio: 990, img: "assets/img/productos/COCINA/ESTANTES/estante.jpg", categoria: "infantil", descripcion: "Estante organizador de 4 repisas, ideal para libros y juguetes." },
+  { id: 3, nombre: "Frutero", precio: 450, img: "assets/img/productos/COCINA/FRUTEROS/frutero.jpg", categoria: "cocina", descripcion: "Frutero de madera estilo rústico, capacidad para 3 kg." },
+  { id: 4, nombre: "Inflable", precio: 650, img: "assets/img/productos/JARDIN/inflable.jpg", categoria: "infantil", descripcion: "Silla inflable para niños, resistente y fácil de limpiar." },
+  { id: 5, nombre: "Juguetero", precio: 1390, img: "assets/img/productos/INFANTILES/jugueteria/juguetero.jpg", categoria: "infantil", descripcion: "Mueble organizador de juguetes con 8 compartimentos." },
+  { id: 6, nombre: "Mesa de Jardín", precio: 2590, img: "assets/img/productos/JARDIN/mesa-jardin.jpg", categoria: "jardin", descripcion: "Mesa plegable de madera tratada para exteriores." },
+  { id: 7, nombre: "Porta Garrafón", precio: 890, img: "assets/img/productos/COCINA/PORTAGALLON/porta-garrafon.jpg", categoria: "hogar", descripcion: "Soporte elegante para garrafón de 20 litros, acabado barnizado." },
+  { id: 8, nombre: "Sala", precio: 7890, img: "assets/img/productos/HOGAR/SALAS/sala01.jpg", categoria: "hogar", descripcion: "Sala de 3 piezas: sofá, loveseat y sillón individual." },
+  { id: 9, nombre: "Sillas de Jardín", precio: 1590, img: "assets/img/productos/JARDIN/sillas-jardin.jpg", categoria: "jardin", descripcion: "Set de 4 sillas plegables para exteriores." },
+  { id: 10, nombre: "Carreola", precio: 3490, img: "assets/img/productos/INFANTILES/carreolas/carreola.jpg", categoria: "infantil", descripcion: "Carreola plegable, liviana y con capota solar." },
+  { id: 11, nombre: "Comedor", precio: 6490, img: "assets/img/productos/HOGAR/COMEDORES/comedor.jpg", categoria: "hogar", descripcion: "Comedor de 6 sillas más mesa extensible." },
+  { id: 12, nombre: "Credenza", precio: 4990, img: "assets/img/productos/HOGAR/COMEDORES/credenza.jpg", categoria: "hogar", descripcion: "Credenza de 3 cajones y 2 puertas, estilo moderno." }
+];
+
+// =================== CARRITO (clave imjr_cart) ===================
+let carrito = JSON.parse(localStorage.getItem('imjr_cart')) || [];
+
+function guardarCarrito() {
+  localStorage.setItem('imjr_cart', JSON.stringify(carrito));
+  actualizarContadorCarrito();
+  renderizarModalCarrito();
+}
+
+function actualizarContadorCarrito() {
+  const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+  const contador = document.getElementById('cartCount');
+  if (contador) contador.innerText = totalItems;
+}
+
+function agregarAlCarrito(producto) {
+  const existente = carrito.find(item => item.id === producto.id);
+  if (existente) {
+    existente.cantidad++;
+  } else {
+    carrito.push({
+      id: producto.id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      cantidad: 1,
+      img: producto.img
+    });
+  }
+  guardarCarrito();
+  mostrarNotificacion(`${producto.nombre} añadido al carrito`);
+}
+
+function eliminarDelCarrito(id) {
+  carrito = carrito.filter(item => item.id !== id);
+  guardarCarrito();
+}
+
+function cambiarCantidad(id, delta) {
+  const item = carrito.find(i => i.id === id);
+  if (item) {
+    const nuevaCant = item.cantidad + delta;
+    if (nuevaCant <= 0) {
+      eliminarDelCarrito(id);
+    } else {
+      item.cantidad = nuevaCant;
+      guardarCarrito();
+    }
+  }
+}
+
+function vaciarCarrito() {
+  carrito = [];
+  guardarCarrito();
+}
+
+function mostrarNotificacion(mensaje) {
+  const toast = document.createElement('div');
+  toast.textContent = mensaje;
+  toast.style.position = 'fixed';
+  toast.style.bottom = '20px';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.backgroundColor = '#3D6B4F';
+  toast.style.color = 'white';
+  toast.style.padding = '10px 20px';
+  toast.style.borderRadius = '40px';
+  toast.style.zIndex = '1100';
+  toast.style.fontSize = '0.85rem';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2000);
+}
+
+function renderizarModalCarrito() {
+  const container = document.getElementById('cartItemsList');
+  const totalSpan = document.getElementById('cartTotal');
+  if (!container) return;
+  if (carrito.length === 0) {
+    container.innerHTML = '<div style="text-align:center; padding:20px;">🛒 El carrito está vacío</div>';
+    totalSpan.innerText = 'Total: $0';
+    return;
+  }
+  let total = 0;
+  let html = '';
+  carrito.forEach(item => {
+    const subtotal = item.precio * item.cantidad;
+    total += subtotal;
+    html += `
+      <li class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-title">${escapeHtml(item.nombre)}</div>
+          <div class="cart-item-price">$${item.precio.toLocaleString('es-MX')} x ${item.cantidad}</div>
+        </div>
+        <div class="cart-item-actions">
+          <button onclick="cambiarCantidad(${item.id}, -1)">-</button>
+          <span>${item.cantidad}</span>
+          <button onclick="cambiarCantidad(${item.id}, 1)">+</button>
+          <button onclick="eliminarDelCarrito(${item.id})" style="background:#D4B48C;">🗑️</button>
+        </div>
+      </li>
+    `;
+  });
+  container.innerHTML = html;
+  totalSpan.innerText = `Total: $${total.toLocaleString('es-MX')}`;
+}
+
+function finalizarCompra() {
+  if (carrito.length === 0) {
+    alert('Tu carrito está vacío. Agrega productos antes de finalizar.');
+    return;
+  }
+  localStorage.setItem('imjr_cart', JSON.stringify(carrito));
+  window.location.href = 'paypage.html';
+}
+
+function escapeHtml(str) {
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
+// =================== MODAL CARRITO ===================
+const modal = document.getElementById('cartModal');
+const cartIcon = document.getElementById('cartIcon');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const emptyCartBtn = document.getElementById('emptyCartBtn');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+function abrirModal() {
+  renderizarModalCarrito();
+  modal.classList.add('open');
+}
+function cerrarModal() {
+  modal.classList.remove('open');
+}
+if (cartIcon) cartIcon.addEventListener('click', abrirModal);
+if (closeModalBtn) closeModalBtn.addEventListener('click', cerrarModal);
+if (emptyCartBtn) emptyCartBtn.addEventListener('click', () => {
+  vaciarCarrito();
+  if (modal.classList.contains('open')) renderizarModalCarrito();
+});
+if (checkoutBtn) checkoutBtn.addEventListener('click', finalizarCompra);
+window.addEventListener('click', (e) => {
+  if (e.target === modal) cerrarModal();
+});
+
+// =================== RENDERIZAR PRODUCTOS ===================
+function renderizarProductos() {
+  const grid = document.getElementById('productosGrid');
+  if (!grid) return;
+  grid.innerHTML = productos.map(p => `
+    <div class="producto-card">
+      <img class="producto-img" src="${p.img}" alt="${escapeHtml(p.nombre)}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23e8dccc%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%238b5a2b%22 font-size=%2210%22%3ESin imagen%3C/text%3E%3C/svg%3E'">
+      <div class="producto-info">
+        <div class="producto-nombre">${escapeHtml(p.nombre)}</div>
+        <div class="producto-desc">${escapeHtml(p.descripcion.substring(0, 80))}...</div>
+        <div class="producto-precio">$${p.precio.toLocaleString('es-MX')}</div>
+        <button class="btn-carrito" data-id="${p.id}">Agregar al carrito</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.btn-carrito').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = parseInt(btn.getAttribute('data-id'));
+      const producto = productos.find(p => p.id === id);
+      if (producto) agregarAlCarrito(producto);
+    });
+  });
+}
+
+// =================== INICIALIZACIÓN ===================
+renderizarProductos();
+actualizarContadorCarrito();
+
+// Sincronizar carrito entre pestañas
+window.addEventListener('storage', (e) => {
+  if (e.key === 'imjr_cart') {
+    carrito = JSON.parse(e.newValue) || [];
+    actualizarContadorCarrito();
+    if (modal.classList.contains('open')) renderizarModalCarrito();
+  }
+});
+
+// =================== MENÚ HAMBURGUESA ===================
+const burger = document.getElementById('nav-burger');
+const menu = document.getElementById('nav-menu');
+if (burger && menu) {
+  burger.addEventListener('click', () => {
+    menu.classList.toggle('open');
+  });
+  // Cierra el menú al hacer clic en un enlace
+  const links = menu.querySelectorAll('a');
+  links.forEach(link => {
+    link.addEventListener('click', () => menu.classList.remove('open'));
+  });
+}
+
+// =================== BOTONES SIN ACCIÓN (RESPALDO) ===================
+(function() {
+  const btns = document.querySelectorAll('button');
+  for (let i = 0; i < btns.length; i++) {
+    const btn = btns[i];
+    if (!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+      btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+    }
+  }
+})();
+</script>
+
+<!-- El contador del carrito necesita un elemento con id="cartCount" -->
+<!-- Lo agregamos dentro del icono del carrito, pero como no hay un elemento .cart-icon en este header (usamos vz-nav), debemos inyectar el ícono manualmente o modificar el nav. Para mantener consistencia, agregamos un div con clase cart-icon y id cartIcon en el nav. -->
+<script>
+  // Añadir el ícono del carrito al nav porque el template de vz-nav no lo tiene
+  (function() {
+    const navInner = document.querySelector('.vz-nav-inner');
+    if (navInner && !document.getElementById('cartIcon')) {
+      const cartDiv = document.createElement('div');
+      cartDiv.className = 'cart-icon';
+      cartDiv.id = 'cartIcon';
+      cartDiv.innerHTML = '🛒 <span class="cart-count" id="cartCount">0</span>';
+      cartDiv.style.cursor = 'pointer';
+      navInner.appendChild(cartDiv);
+    }
+  })();
+</script>
+
+</body>
+</html>

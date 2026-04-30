@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros | Infantil Muebles JR</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <meta name="description" content="Conoce la historia, valores y equipo de Infantil Muebles JR. Más de 20 años fabricando muebles infantiles de calidad.">
+  
+  <!-- Estilos globales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/fx.css">
+  
+  <style>
+    /* Estilos adicionales específicos para la página Nosotros */
+    .vz-section {
+      padding: 64px 24px;
+    }
+    .vz-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .vz-eyebrow {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #C47A3A;
+      margin-bottom: 16px;
+    }
+    .vz-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 400;
+      color: #3D2B1F;
+      margin-bottom: 24px;
+    }
+    .vz-h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: #3D2B1F;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .vz-h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #8B5A2B;
+      margin-bottom: 12px;
+    }
+    .vz-body {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #4A3B2C;
+      max-width: 800px;
+      margin: 0 auto 20px;
+      text-align: center;
+    }
+    .vz-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      margin-top: 20px;
+    }
+    .vz-bg-alt {
+      background: #FCF9F4;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .team-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+    }
+    .team-card img {
+      width: 100%;
+      height: 377px;        /* Aumentado un 45% respecto a los 260px originales */
+      object-fit: cover;
+      background: #EADBC6;
+    }
+    .team-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      margin-top: 16px;
+      color: #3D2B1F;
+    }
+    .team-card .rol {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #C47A3A;
+      margin: 8px 0;
+    }
+    .team-card .especialidad {
+      font-size: 0.8rem;
+      color: #7A5C44;
+      padding: 0 16px 20px;
+    }
+    .stats-nosotros {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      background: #3D2B1F;
+      color: white;
+      padding: 48px 24px;
+      border-radius: 24px;
+      margin-top: 48px;
+    }
+    .stat-num {
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    @media (max-width: 700px) {
+      .vz-h1 { font-size: 2.2rem; }
+      .stats-nosotros { gap: 24px; }
+      /* Ajuste opcional: en móviles la altura puede reducirse ligeramente para no dominar la pantalla */
+      .team-card img {
+        height: 280px;
+      }
+    }
+  </style>
+
+    
+    
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
+  <a href="index.html" class="logo">Infantil Muebles JR</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="colecciones.html">Colecciones</a></li>
+    <li><a href="catalogo-landingpage.html">Catálogo</a></li>
+    <li><a href="funnel.html">Personalizar</a></li>
+    <li><a href="paypage.html">Contacto</a></li>
+    <li><a href="salecar.html">Tienda</a></li>
+    <li><a href="nosotros.html" class="active">Nosotros</a></li>
+  </ul>
+</header>
+
+<main>
+  <!-- Sección Historia -->
+  <section class="vz-section">
+    <div class="vz-container">
+      <p class="vz-eyebrow">Más de 20 años de experiencia</p>
+      <h1 class="vz-h1">Calidad, calidez y tradición familiar</h1>
+      <p class="vz-body">
+        Infantil Muebles JR nació en <strong>2005</strong> del sueño de ofrecer muebles funcionales, bonitos y duraderos a precios justos.  
+        Lo que comenzó como un pequeño taller familiar hoy es una empresa consolidada que atiende a cientos de familias en Guadalajara y todo México.
+      </p>
+      <p class="vz-body">
+        <strong>Federico López</strong>, fundador y director general, tiene <strong>casi 30 años de experiencia</strong> en el mundo del mueble.  
+        Su pasión por la madera y el diseño infantil ha guiado cada pieza que sale de nuestros talleres.
+      </p>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="vz-section vz-bg-alt">
+    <div class="vz-container">
+      <h2 class="vz-h2">Nuestros valores</h2>
+      <div class="vz-grid-3">
+        <div>
+          <div class="vz-h3">🪵 Calidad</div>
+          <p>Materiales certificados, procesos artesanales y acabados de primera.</p>
+        </div>
+        <div>
+          <div class="vz-h3">🤝 Confianza</div>
+          <p>Atención personalizada, garantía y servicio postventa.</p>
+        </div>
+        <div>
+          <div class="vz-h3">🌿 Compromiso</div>
+          <p>Con el medio ambiente (usamos madera sostenible) y con nuestra comunidad local.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Datos destacados (stats) -->
+  <section class="vz-section">
+    <div class="vz-container">
+      <div class="stats-nosotros">
+        <div><div class="stat-num" id="yearsCount">0</div><div class="stat-label">Años de experiencia</div></div>
+        <div><div class="stat-num">+2000</div><div class="stat-label">Clientes felices</div></div>
+        <div><div class="stat-num">+50</div><div class="stat-label">Modelos exclusivos</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-label">Hecho en México</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Equipo de trabajo (dinámico) -->
+  <section class="vz-section vz-bg-alt">
+    <div class="vz-container">
+      <h2 class="vz-h2">Conoce a nuestro equipo</h2>
+      <div id="teamContainer" class="team-grid">
+        <p>Cargando equipo...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mapa y contacto rápido -->
+  <section class="vz-section">
+    <div class="vz-container">
+      <h2 class="vz-h2">Visítanos</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between;">
+        <div style="flex:1; min-width: 250px;">
+          <p><strong>📍 Dirección</strong><br>
+          <span id="direccion">Av. Valle de Zapopan 1372-2, 45200, Zapopan, Jalisco</span></p>
+          <p><strong>📞 Teléfono</strong><br>
+          <span id="telefono"></span></p>
+          <p><strong>⏰ Horario</strong><br>
+          <span id="horario">Lunes a Sábado 10:00 - 19:00</span></p>
+          <p><strong>📧 Email</strong><br>
+          <span id="email"></span></p>
+          <p><strong>🛒 WhatsApp</strong><br>
+          <a href="#" id="whatsappLink" target="_blank">Envíanos un mensaje</a></p>
+        </div>
+        <div style="flex:2; min-width: 280px; height: 300px; background: #D9CBB8; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #5A3E2A;">
+          <iframe src="https://maps.google.com/maps?q=Av.%20Valle%20de%20Zapopan%201372-2%2C%2045200%20Zapopan%2C%20Jal.&z=15&output=embed" width="100%" height="100%" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="siteFooter">
+  <span class="footer-text">Av. Valle de Zapopan 1372-2, Zapopan, Jalisco</span>
+  <a href="https://wa.me/523334866318" target="_blank" class="footer-link">33 3486 6318</a>
+  <span class="footer-text">✨ Muebles con amor ✨</span>
+</footer>
+
+<script>
+  // Cargar configuración y equipo desde JSON
+  async function cargarDatos() {
+    try {
+      // 1. Cargar config.json
+      const configRes = await fetch('data/config.json');
+      if (configRes.ok) {
+        const config = await configRes.json();
+        document.getElementById('direccion').innerText = config.direccion || 'Av. Valle de Zapopan 1372-2, 45200, Zapopan, Jalisco';
+        document.getElementById('horario').innerText = config.horario || 'Lunes a Sábado 10:00 - 19:00';
+        document.getElementById('email').innerText = config.email_ventas || 'oribaco85@gmail.com';
+        const telefonoSpan = document.getElementById('telefono');
+        telefonoSpan.innerText = config.whatsapp_display || '33 3486 6318';
+        const waLink = document.getElementById('whatsappLink');
+        if (config.whatsapp) {
+          waLink.href = `https://wa.me/${config.whatsapp}`;
+        } else {
+          waLink.href = 'https://wa.me/523334866318';
+        }
+      }
+
+      // 2. Cargar equipo.json
+      const teamRes = await fetch('data/equipo.json');
+      if (teamRes.ok) {
+        const equipo = await teamRes.json();
+        const container = document.getElementById('teamContainer');
+        if (container && equipo.length) {
+          container.innerHTML = equipo.map(m => `
+            <div class="team-card">
+              <img src="${m.foto}" alt="${m.nombre}" onerror="this.src='assets/img/equipo/mockup02.png'; this.onerror=null;">
+              <h3>${m.nombre}</h3>
+              <div class="rol">${m.rol}</div>
+              <div class="especialidad">${m.especialidad}</div>
+            </div>
+          `).join('');
+        } else if (container) {
+          container.innerHTML = '<p>No se pudo cargar el equipo.</p>';
+        }
+      } else {
+        console.warn('No se encontró equipo.json, mostrando equipo por defecto');
+        document.getElementById('teamContainer').innerHTML = `
+          <div class="team-card"><img src="assets/img/equipo/fede.jpg" alt="Federico"><h3>A. Federico Lopez</h3><div class="rol">Director General</div><div class="especialidad">Ventas al detalle</div></div>
+          <div class="team-card"><img src="assets/img/equipo/haziel.jpg" alt="Haziel"><h3>Haziel Lopez</h3><div class="rol">Asesora de ventas</div><div class="especialidad">Muebles infantiles</div></div>
+          <div class="team-card"><img src="assets/img/equipo/oralia.jpg" alt="Oralia"><h3>Oralia Oriba</h3><div class="rol">Gerente de Ventas</div><div class="especialidad">Jardín y terraza</div></div>
+        `;
+      }
+
+      // 3. Animar años de experiencia (casi 30)
+      const yearsSpan = document.getElementById('yearsCount');
+      if (yearsSpan) {
+        let current = 0;
+        const target = 28;
+        const interval = setInterval(() => {
+          if (current < target) {
+            current++;
+            yearsSpan.textContent = current + '+';
+          } else {
+            clearInterval(interval);
+          }
+        }, 40);
+      }
+    } catch (err) {
+      console.error('Error cargando datos:', err);
+      document.getElementById('teamContainer').innerHTML = '<p>Hubo un problema al cargar el equipo. Intenta más tarde.</p>';
+    }
+  }
+
+  cargarDatos();
+</script>
+
+<!-- Estilos complementarios para header/footer consistentes con el resto del sitio -->
+<style>
+  .site-header, .site-footer {
+    background: #FFFCF5;
+    border-bottom: 1px solid #E2D5C0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .site-footer {
+    border-top: 1px solid #E2D5C0;
+    border-bottom: none;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 0;
+    background: #FFFCF5;
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #8B5A2B;
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links li a {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: #9B7B5C;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links li a:hover, .nav-links li a.active {
+    color: #C47A3A;
+  }
+  .footer-text, .footer-link {
+    font-size: 12px;
+    color: #9B7B5C;
+    text-decoration: none;
+  }
+  .footer-link:hover {
+    color: #C47A3A;
+  }
+  @media (max-width: 700px) {
+    .site-header { flex-direction: column; text-align: center; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .vz-section { padding: 48px 16px; }
+  }
+</style>
+  
+<script>
+(function() {
+    var btns = document.querySelectorAll('button');
+    for(var i=0; i<btns.length; i++) {
+        var btn = btns[i];
+        if(!btn.hasAttribute('onclick') && !btn.hasAttribute('data-action') && !btn.closest('form')) {
+            btn.setAttribute('onclick', "alert('Esta función estará disponible próximamente.');");
+        }
+    }
+})();
+</script>
+</body>
+</html>
